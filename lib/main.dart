@@ -1,4 +1,4 @@
-import 'package:flow1000_admin/albumIndex.dart';
+import 'package:flow1000_admin/album_index.dart';
 import 'package:flutter/material.dart';
 
 void main() {
