@@ -4,19 +4,19 @@ class AlbumInfo {
   final String cover;
   final int coverWidth;
   final int coverHeight;
-  final String ablum;
+  final String album;
   final String clientStatus;
 
-  AlbumInfo({required this.index, required this.name, required this.cover, required this.coverWidth, required this.coverHeight, required this.ablum, required this.clientStatus});
+  AlbumInfo({required this.index, required this.name, required this.cover, required this.coverWidth, required this.coverHeight, required this.album, required this.clientStatus});
 
   factory AlbumInfo.fromJson(Map<String, dynamic> json) {
     return AlbumInfo(
-      index: json["id"], 
+      index: json["index"], 
       name: json["name"], 
       cover: json["cover"], 
       coverWidth: json["coverWidth"], 
       coverHeight: json["coverHeight"], 
-      ablum: json["ablum"], 
+      album: json["album"], 
       clientStatus: json["clientStatus"]);
   }
 }
