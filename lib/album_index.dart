@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'config.dart';
+import 'struct/slot.dart';
 
 class AlbumIndexPage extends StatefulWidget{
   const AlbumIndexPage({super.key});
@@ -30,15 +31,23 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   }
 
   List<AlbumInfo> albumInfoList = [];
+  List<Slot> slot = [Slot(), Slot(), Slot(), Slot()];
 
   @override
   void initState() {
     super.initState();
     fetchAlbumIndex().then((albumInfoList) {
-      for (AlbumInfo albumInfo in albumInfoList) {
+      for (int i = 0; i < albumInfoList.length; i++) {
+        AlbumInfo albumInfo = albumInfoList[i];
         double coverWidth = width / 4;
         double coverHeight = albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
-        log("coverHeight:$coverHeight, coverWidth:$coverWidth");
+        // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
+
+        int slotIndex = minSlot(slot);
+        Slot slotOne = slot[slotIndex];
+        slotOne.slotItemList
+            .add(SlotItem(i, slotOne.totalHeight, coverHeight, slotIndex));
+        slotOne.totalHeight = slotOne.totalHeight + coverHeight;
       }
       setState(() {
         this.albumInfoList = albumInfoList;
