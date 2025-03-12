@@ -17,6 +17,7 @@ class AlbumIndexPage extends StatefulWidget{
 }
 
 class AlbumIndexState extends State<AlbumIndexPage> {
+  late double width;
   Future<List<AlbumInfo>> fetchAlbumIndex() async {
     final response = await http.get(Uri.parse(albumIndexUrl()));
     if (response.statusCode == 200) {
@@ -34,6 +35,11 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   void initState() {
     super.initState();
     fetchAlbumIndex().then((albumInfoList) {
+      for (AlbumInfo albumInfo in albumInfoList) {
+        double coverWidth = width / 4;
+        double coverHeight = albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
+        log("coverHeight:$coverHeight, coverWidth:$coverWidth");
+      }
       setState(() {
         this.albumInfoList = albumInfoList;
       });
@@ -42,6 +48,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
     Widget body;
     if (albumInfoList.isEmpty) {
       body = Text("AlbumIndexPage");
