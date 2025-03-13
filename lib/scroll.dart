@@ -47,7 +47,7 @@ class CustomScrollViewExampleApp extends StatelessWidget {
 }
 
 class CustomScrollViewExample extends StatelessWidget {
-  CustomScrollViewExample({super.key, required this.slots, required this.builder, required this.totalLength});
+  const CustomScrollViewExample({super.key, required this.slots, required this.builder, required this.totalLength});
 
   final List<Slot> slots;
 
