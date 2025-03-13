@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'struct/slot.dart';
+
 /// Flutter code sample for [CustomScrollView].
 
 // void main() => runApp(const CustomScrollViewExampleApp());
@@ -22,7 +24,7 @@ class CustomScrollViewExampleApp extends StatelessWidget {
 class CustomScrollViewExample extends StatelessWidget {
   const CustomScrollViewExample({super.key});
   
-  final int totalLength = 1000;
+  final int totalLength = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -84,41 +86,6 @@ class _RenderSliverWaterFallParentData extends SliverMultiBoxAdaptorParentData {
   double? crossOffSet;
 }
 
-class SlotItem {
-  final int index;
-  final double scrollOffset;
-  final double itemHeight;
-  final int slotIndex;
-
-  SlotItem(this.index, this.scrollOffset, this.itemHeight, this.slotIndex);
-}
-
-class Slot {
-  final List<SlotItem> slotItemList = [];
-  double totalHeight = 0;
-
-  SlotItem itemByIndex(int index) {
-    return slotItemList.firstWhere((item) {
-      return item.index == index;
-    });
-  }
-
-  bool existByIndex(int index) {
-    return slotItemList.any((item) => item.index == index);
-  }
-}
-
-int minSlot(List<Slot> slot) {
-  double min = slot[0].totalHeight;
-  int index = 0;
-  for (int i = 0; i < 4; i++) {
-    if (slot[i].totalHeight < min) {
-      min = slot[i].totalHeight;
-      index = i;
-    }
-  }
-  return index;
-}
 
 int maxSlotByRenderIndex(List<Slot> slot, int renderIndex) {
   double maxHeight = 0;
