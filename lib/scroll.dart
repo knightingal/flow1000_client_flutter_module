@@ -11,24 +11,15 @@ import 'struct/slot.dart';
 
 final List<Color> colorPiker = [Colors.red, Colors.green, Colors.blue, Colors.yellow];
 class CustomScrollViewExampleApp extends StatelessWidget {
-  const CustomScrollViewExampleApp({super.key});
+  CustomScrollViewExampleApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: CustomScrollViewExample(),
-    );
-  }
-}
-
-class CustomScrollViewExample extends StatelessWidget {
-  const CustomScrollViewExample({super.key});
-  
   final int totalLength = 200;
 
+  final List<Slot> slot = [Slot(), Slot(),Slot(),Slot()];
+
   @override
   Widget build(BuildContext context) {
-    const Key centerKey = ValueKey<String>('bottom-sliver-list');
+
     for (int i = 0; i < totalLength; i++) {
       int slotIndex = minSlot(slot);
       Slot slotOne = slot[slotIndex];
@@ -36,6 +27,44 @@ class CustomScrollViewExample extends StatelessWidget {
           .add(SlotItem(i, slotOne.totalHeight, 100 + i % 4 * 20.0, slotIndex));
       slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
     }
+    return MaterialApp(
+      home: CustomScrollViewExample(
+        slots: slot, 
+        builder: (BuildContext context, int index) {
+          return Container(
+            alignment: Alignment.center,
+            color: colorPiker[index % 4],
+            height: 100 + index % 4 * 20.0,
+            // height: 100 ,
+            width: 0,
+            child: Text('Item: $index'),
+          );
+        }, 
+        totalLength: totalLength
+      ),
+    );
+  }
+}
+
+class CustomScrollViewExample extends StatelessWidget {
+  CustomScrollViewExample({super.key, required this.slots, required this.builder, required this.totalLength});
+
+  final List<Slot> slots;
+
+  final Widget? Function(BuildContext, int) builder;
+  
+  final int totalLength;
+
+  @override
+  Widget build(BuildContext context) {
+    const Key centerKey = ValueKey<String>('bottom-sliver-list');
+    // for (int i = 0; i < totalLength; i++) {
+    //   int slotIndex = minSlot(slot);
+    //   Slot slotOne = slot[slotIndex];
+    //   slotOne.slotItemList
+    //       .add(SlotItem(i, slotOne.totalHeight, 100 + i % 4 * 20.0, slotIndex));
+    //   slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -50,18 +79,20 @@ class CustomScrollViewExample extends StatelessWidget {
         center: centerKey,
         slivers: <Widget>[
           SliverWaterFall(
+            slots,
             key: centerKey,
             delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  alignment: Alignment.center,
-                  color: colorPiker[index % 4],
-                  height: 100 + index % 4 * 20.0,
-                  // height: 100 ,
-                  width: 0,
-                  child: Text('Item: $index'),
-                );
-              },
+              // (BuildContext context, int index) {
+              //   return Container(
+              //     alignment: Alignment.center,
+              //     color: colorPiker[index % 4],
+              //     height: 100 + index % 4 * 20.0,
+              //     // height: 100 ,
+              //     width: 0,
+              //     child: Text('Item: $index'),
+              //   );
+              // },
+              builder,
               childCount: totalLength,
             ),
           )
@@ -72,13 +103,15 @@ class CustomScrollViewExample extends StatelessWidget {
 }
 
 class SliverWaterFall extends SliverMultiBoxAdaptorWidget {
-  const SliverWaterFall({super.key, required super.delegate});
+  const SliverWaterFall(this.slot, {super.key, required super.delegate});
+
+  final List<Slot> slot;
 
   @override
   RenderSliverMultiBoxAdaptor createRenderObject(BuildContext context) {
     final SliverMultiBoxAdaptorElement element =
         context as SliverMultiBoxAdaptorElement;
-    return RenderSliverWaterFall(childManager: element);
+    return RenderSliverWaterFall(slot, childManager: element);
   }
 }
 
@@ -121,10 +154,12 @@ SlotItem? findSlotByIndex(List<Slot> slot, int index) {
   return null;
 }
 
-List<Slot> slot = [Slot(), Slot(), Slot(), Slot()];
+// List<Slot> slot = [Slot(), Slot(), Slot(), Slot()];
 
 class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
-  RenderSliverWaterFall({required super.childManager});
+  RenderSliverWaterFall(this.slot, {required super.childManager});
+
+  final List<Slot> slot;
 
   @override
   void setupParentData(covariant RenderObject child) {

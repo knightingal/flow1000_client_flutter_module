@@ -1,6 +1,9 @@
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flutter/material.dart';
 
+import 'scroll.dart';
+import 'struct/slot.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -69,8 +72,20 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  final int totalLength = 200;
+
+  final List<Slot> slot = [Slot(), Slot(),Slot(),Slot()];
+
   @override
   Widget build(BuildContext context) {
+
+    for (int i = 0; i < totalLength; i++) {
+      int slotIndex = minSlot(slot);
+      Slot slotOne = slot[slotIndex];
+      slotOne.slotItemList
+          .add(SlotItem(i, slotOne.totalHeight, 100 + i % 4 * 20.0, slotIndex));
+      slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
+    }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -87,7 +102,20 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body:  AlbumIndexPage(),
+      body:  CustomScrollViewExample(
+        slots: slot, 
+        builder: (BuildContext context, int index) {
+          return Container(
+            alignment: Alignment.center,
+            color: colorPiker[index % 4],
+            height: 100 + index % 4 * 20.0,
+            // height: 100 ,
+            width: 0,
+            child: Text('Item: $index'),
+          );
+        }, 
+        totalLength: totalLength
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
