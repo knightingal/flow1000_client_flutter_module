@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flow1000_admin/scroll.dart';
 import 'package:flow1000_admin/struct/album_info.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -64,19 +65,32 @@ class AlbumIndexState extends State<AlbumIndexPage> {
     if (albumInfoList.isEmpty) {
       body = Text("AlbumIndexPage");
     } else {
-      body = ListView.builder(
-        itemBuilder: (context, index) {
-          return DirItem(
-            index: index, 
-            title: albumInfoList[index].name, 
-            tapCallback: (int index, String title) {}
+      body = CustomScrollViewExample(
+        slots: slot, 
+        builder: (BuildContext context, int index) {
+          return Container(
+            alignment: Alignment.center,
+            color: colorPiker[index % 4],
+            height: albumInfoList[index].realHeight,
+            // height: 100 ,
+            width: 0,
+            child: Text('Item: $index'),
           );
-        },
-        prototypeItem: DirItem(
-          index: 0, 
-          title: albumInfoList[0].name, tapCallback: (int index, String title) {}),
-        itemCount: albumInfoList.length,
-      );
+        }, 
+        totalLength: albumInfoList.length);
+      // body = ListView.builder(
+      //   itemBuilder: (context, index) {
+      //     return DirItem(
+      //       index: index, 
+      //       title: albumInfoList[index].name, 
+      //       tapCallback: (int index, String title) {}
+      //     );
+      //   },
+      //   prototypeItem: DirItem(
+      //     index: 0, 
+      //     title: albumInfoList[0].name, tapCallback: (int index, String title) {}),
+      //   itemCount: albumInfoList.length,
+      // );
     }
     return body;
   }

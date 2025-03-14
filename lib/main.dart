@@ -102,20 +102,21 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body:  CustomScrollViewExample(
-        slots: slot, 
-        builder: (BuildContext context, int index) {
-          return Container(
-            alignment: Alignment.center,
-            color: colorPiker[index % 4],
-            height: 100 + index % 4 * 20.0,
-            // height: 100 ,
-            width: 0,
-            child: Text('Item: $index'),
-          );
-        }, 
-        totalLength: totalLength
-      ),
+      // body:  CustomScrollViewExample(
+      //   slots: slot, 
+      //   builder: (BuildContext context, int index) {
+      //     return Container(
+      //       alignment: Alignment.center,
+      //       color: colorPiker[index % 4],
+      //       height: 100 + index % 4 * 20.0,
+      //       // height: 100 ,
+      //       width: 0,
+      //       child: Text('Item: $index'),
+      //     );
+      //   }, 
+      //   totalLength: totalLength
+      // ),
+      body: AlbumIndexPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
