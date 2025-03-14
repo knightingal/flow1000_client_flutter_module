@@ -6,6 +6,9 @@ class AlbumInfo {
   final int coverHeight;
   final String album;
   final String clientStatus;
+  double realWidth = 0;
+  double realHeight = 0;
+
 
   AlbumInfo({required this.index, required this.name, required this.cover, required this.coverWidth, required this.coverHeight, required this.album, required this.clientStatus});
 
