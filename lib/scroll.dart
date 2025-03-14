@@ -167,7 +167,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     return (child.parentData as _RenderSliverWaterFallParentData).crossOffSet!;
   }
 
-  final double padding = 200;
+  final double padding = 0;
 
   @override
   void performLayout() {
