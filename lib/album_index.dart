@@ -42,6 +42,8 @@ class AlbumIndexState extends State<AlbumIndexPage> {
         double coverWidth = width / 4;
         double coverHeight = albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
         // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
+        albumInfo.realHeight = coverHeight;
+        albumInfo.realWidth = coverWidth;
 
         int slotIndex = minSlot(slot);
         Slot slotOne = slot[slotIndex];
