@@ -58,13 +58,6 @@ class CustomScrollViewExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const Key centerKey = ValueKey<String>('bottom-sliver-list');
-    // for (int i = 0; i < totalLength; i++) {
-    //   int slotIndex = minSlot(slot);
-    //   Slot slotOne = slot[slotIndex];
-    //   slotOne.slotItemList
-    //       .add(SlotItem(i, slotOne.totalHeight, 100 + i % 4 * 20.0, slotIndex));
-    //   slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
-    // }
 
     return Scaffold(
       appBar: AppBar(
