@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'scroll.dart';
 import 'struct/slot.dart';
+import 'widget/encript_image.dart';
 
 void main() {
   runApp(const MyApp());
