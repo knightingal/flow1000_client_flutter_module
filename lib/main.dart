@@ -1,3 +1,4 @@
+import 'package:flow1000_admin/album_grid.dart';
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flutter/material.dart';
 
@@ -117,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //   }, 
       //   totalLength: totalLength
       // ),
-      body: AlbumIndexPage(),
+      body: AlbumGridPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
