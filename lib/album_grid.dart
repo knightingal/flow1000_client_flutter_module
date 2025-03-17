@@ -52,7 +52,8 @@ class AlbumGridPageState extends State<AlbumGridPage> {
                   crossAxisCount: 4
                 ), 
               itemBuilder: (context, index) {
-                return Text(snapshot.data![index].name);
+                // return Text(snapshot.data![index].name);
+                return Image.network(snapshot.data![index].toCoverUrl());
               });
           });
         } else {

@@ -10,7 +10,8 @@ class AlbumInfo {
   double realHeight = 0;
 
   String toCoverUrl() {
-    return "http://192.168.2.12:3002/linux1000/encrypted/$name/$cover";
+    // return "http://192.168.2.12:3002/linux1000/encrypted/$name/$cover";
+    return "http://192.168.2.12:3002/linux1000/source/$name/${cover.replaceAll(".bin", "")}";
   }
 
 
