@@ -27,6 +27,10 @@ class Encrypter {
   List<int> decryptBytes(Encrypted encrypted, {IV? iv}) {
     return aes.decryptBytes(encrypted, iv: iv);
   }
+
+  Uint8List decryptUint8List(Uint8List ptByteArray, {IV? iv}) {
+    return aes.decryptUint8List(ptByteArray, iv: iv);
+  }
 }
 
 class Encrypted {
@@ -47,7 +51,7 @@ class AES {
   late List<int> en;
   late List<int> expansionKey;
 
-  List<int> decryptUint8List(Uint8List ptByteArray, {IV? iv}) {
+  Uint8List decryptUint8List(Uint8List ptByteArray, {IV? iv}) {
     if (iv != null) {
       expansionKey = keyExpansion(key.key);
       en = cipher(i8ListToI32List(iv.iv), expansionKey);
@@ -71,7 +75,7 @@ class AES {
       en = cipher(ptI32Array, expansionKey);
     }
 
-    return output;
+    return Uint8List.fromList(output);
   }
 
   static List<int> invCfb(
