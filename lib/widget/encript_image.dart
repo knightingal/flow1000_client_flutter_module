@@ -28,7 +28,7 @@ class EncriptImageState extends State<EncriptImageWidget> {
     final key = encrypt_lib.Key.fromUtf8("password");
     final iv = encrypt_lib.IV.fromUtf8("");
     final encrypter = encrypt_lib.Encrypter(
-        encrypt_lib.AES(key, mode: encrypt_lib.AESMode.cfb, padding: null));
+        encrypt_lib.AES(key, mode: encrypt_lib.AESMode.cfb, padding: null), iv: iv);
     String src = switch (widget.src) {
       null => "http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin",
       var s => s,
@@ -41,7 +41,7 @@ class EncriptImageState extends State<EncriptImageWidget> {
       if (resp2.statusCode == 200) {
         Uint8List bytes = resp2.bodyBytes;
         Uint8List body =
-            encrypter.decryptUint8List(bytes, iv: iv);
+            encrypter.decryptUint8List(bytes);
         return body;
       } else {
         return Uint8List.fromList([]);

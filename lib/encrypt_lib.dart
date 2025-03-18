@@ -22,14 +22,19 @@ class IV {
 class Encrypter {
   final AES aes;
 
-  Encrypter(this.aes);
+  Encrypter(this.aes, {IV? iv}) {
+    if (iv != null) {
+      aes.init(iv);
+    }
+  }
+
 
   List<int> decryptBytes(Encrypted encrypted, {IV? iv}) {
     return aes.decryptBytes(encrypted, iv: iv);
   }
 
-  Uint8List decryptUint8List(Uint8List ptByteArray, {IV? iv}) {
-    return aes.decryptUint8List(ptByteArray, iv: iv);
+  Uint8List decryptUint8List(Uint8List ptByteArray) {
+    return aes.decryptUint8List(ptByteArray);
   }
 }
 
@@ -48,14 +53,15 @@ class AES {
     return invCfb(key.key, iv!.iv, encrypted.bytes);
   }
 
+  void init(IV iv) {
+      expansionKey = keyExpansion(key.key);
+      en = cipher(i8ListToI32List(iv.iv), expansionKey);
+  }
+
   late List<int> en;
   late List<int> expansionKey;
 
-  Uint8List decryptUint8List(Uint8List ptByteArray, {IV? iv}) {
-    if (iv != null) {
-      expansionKey = keyExpansion(key.key);
-      en = cipher(i8ListToI32List(iv.iv), expansionKey);
-    }
+  Uint8List decryptUint8List(Uint8List ptByteArray) {
     List<int> output = List<int>.generate(ptByteArray.length, (i) => 0);
 
     for (int i = 0; i < ptByteArray.length; i += 16) {
