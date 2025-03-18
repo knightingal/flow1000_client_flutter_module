@@ -90,11 +90,12 @@ class AlbumIndexState extends State<AlbumIndexPage> {
           //   width: 0,
           //   child: Text('Item: $index'),
           // );
-          return EncriptImageWidget(
-            src: albumInfoList[index].toCoverUrl(), 
-            width: albumInfoList[index].realWidth, 
-            height: albumInfoList[index].realHeight,
-          );
+          return Image.network(albumInfoList[index].toCoverUrl(), width: albumInfoList[index].realWidth, height: albumInfoList[index].realHeight,);
+          // return EncriptImageWidget(
+          //   src: albumInfoList[index].toCoverUrl(), 
+          //   width: albumInfoList[index].realWidth, 
+          //   height: albumInfoList[index].realHeight,
+          // );
         }, 
         totalLength: albumInfoList.length
       )      

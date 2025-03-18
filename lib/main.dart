@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //   }, 
       //   totalLength: totalLength
       // ),
-      body: AlbumGridPage(),
+      body: AlbumIndexPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
