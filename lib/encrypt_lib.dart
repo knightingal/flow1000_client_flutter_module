@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class Key {
   final List<int> key;
 
@@ -40,6 +42,36 @@ class AES {
 
   List<int> decryptBytes(Encrypted encrypted, {IV? iv}) {
     return invCfb(key.key, iv!.iv, encrypted.bytes);
+  }
+
+  late List<int> en;
+  late List<int> expansionKey;
+
+  List<int> decryptUint8List(Uint8List ptByteArray, {IV? iv}) {
+    if (iv != null) {
+      expansionKey = keyExpansion(key.key);
+      en = cipher(i8ListToI32List(iv.iv), expansionKey);
+    }
+    List<int> output = List<int>.generate(ptByteArray.length, (i) => 0);
+
+    for (int i = 0; i < ptByteArray.length; i += 16) {
+      List<int> ptArray = ptByteArray.sublist(i, i + 16);
+      List<int> ptI32Array = i8ListToI32List(ptArray);
+      for (int j = 0; j < 4; j++) {
+        en[j] ^= ptI32Array[j];
+      }
+      for (int j = 0; j < 4; j++) {
+        // dart format off
+        output[i + j * 4    ] = (en[j] >>> 24) & 0xff;
+        output[i + j * 4 + 1] = (en[j] >>> 16) & 0xff;
+        output[i + j * 4 + 2] = (en[j] >>>  8) & 0xff;
+        output[i + j * 4 + 3] = (en[j]       ) & 0xff;
+        // dart format on
+      }
+      en = cipher(ptI32Array, expansionKey);
+    }
+
+    return output;
   }
 
   static List<int> invCfb(
