@@ -40,9 +40,14 @@ class EncriptImageState extends State<EncriptImageWidget> {
     return reps2Future.then((resp2) {
       if (resp2.statusCode == 200) {
         Uint8List bytes = resp2.bodyBytes;
-        Uint8List body =
-            encrypter.decryptUint8List(bytes);
-        return body;
+        Uint8List header = bytes.sublist(0, 1024);
+        Uint8List tail = bytes.sublist(1024);
+        Uint8List headerDP = encrypter.decryptUint8List(header);
+        Uint8List tailDP = encrypter.decryptUint8List(tail);
+        bytes.setAll(0, headerDP);
+        bytes.setAll(1024, tailDP);
+        
+        return bytes;
       } else {
         return Uint8List.fromList([]);
       }
