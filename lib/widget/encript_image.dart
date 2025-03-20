@@ -453,3 +453,35 @@ class WebImageInfo implements ImageInfo {
       (4 * htmlImage.naturalWidth * htmlImage.naturalHeight).toInt();
       
 }
+
+class ImageEx extends Image {
+  
+  ImageEx.network(
+    String src, {
+    super.key,
+    double scale = 1.0,
+    super.frameBuilder,
+    super.loadingBuilder,
+    super.errorBuilder,
+    super.semanticLabel,
+    super.excludeFromSemantics = false,
+    super.width,
+    super.height,
+    super.color,
+    super.opacity,
+    super.colorBlendMode,
+    super.fit,
+    super.alignment = Alignment.center,
+    super.repeat = ImageRepeat.noRepeat,
+    super.centerSlice,
+    super.matchTextDirection = false,
+    super.gaplessPlayback = false,
+    super.filterQuality = FilterQuality.medium,
+    super.isAntiAlias = false,
+    Map<String, String>? headers,
+    int? cacheWidth,
+    int? cacheHeight,
+  }) : super(image: ResizeImage.resizeIfNeeded(cacheWidth, cacheHeight, EncryptNetworkImage(src, scale: scale, headers: headers)));
+  
+
+}
