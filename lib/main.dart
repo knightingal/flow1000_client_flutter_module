@@ -118,9 +118,9 @@ class _MyHomePageState extends State<MyHomePage> {
       //   }, 
       //   totalLength: totalLength
       // ),
-      // body: AlbumIndexPage(),
+      body: AlbumIndexPage(),
       // body: EncriptImageWidget(),
-      body: Image.network("http://192.168.2.12:3002/linux1000/source/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg"),
+      // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
