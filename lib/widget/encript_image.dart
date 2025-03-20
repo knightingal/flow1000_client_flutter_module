@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui_web' as ui_web;
@@ -183,6 +184,7 @@ class EncryptNetworkImage
     StreamController<ImageChunkEvent> chunkEvents,
   ) async {
     assert(key == this);
+    log("encrypte loadAsync:${key.url}");
 
     final Uri resolved = Uri.base.resolve(key.url);
 
@@ -318,6 +320,16 @@ class EncryptNetworkImage
     await completer.future;
 
     final Uint8List bytes = (request.response! as JSArrayBuffer).toDart.asUint8List();
+
+
+    // final key = encrypt_lib.Key.fromUtf8("");
+    // final iv = encrypt_lib.IV.fromUtf8("");
+    // final encrypter = encrypt_lib.Encrypter(
+    //     encrypt_lib.AES(key, mode: encrypt_lib.AESMode.cfb, padding: null), iv: iv);
+    
+
+    // Uint8List headerDP = encrypter.decryptUint8List(bytes);
+
 
     if (bytes.lengthInBytes == 0) {
       throw image_provider.NetworkImageLoadException(
