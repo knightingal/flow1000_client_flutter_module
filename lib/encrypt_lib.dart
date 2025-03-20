@@ -62,7 +62,7 @@ class AES {
   late List<int> expansionKey;
 
   Uint8List decryptUint8List(Uint8List ptByteArray) {
-    List<int> output = List<int>.generate(ptByteArray.length, (i) => 0);
+    // List<int> output = List<int>.generate(ptByteArray.length, (i) => 0);
 
     for (int i = 0; i < ptByteArray.length; i += 16) {
       List<int> ptArray = ptByteArray.sublist(i, i + 16);
@@ -72,16 +72,17 @@ class AES {
       }
       for (int j = 0; j < 4; j++) {
         // dart format off
-        output[i + j * 4    ] = (en[j] >>> 24) & 0xff;
-        output[i + j * 4 + 1] = (en[j] >>> 16) & 0xff;
-        output[i + j * 4 + 2] = (en[j] >>>  8) & 0xff;
-        output[i + j * 4 + 3] = (en[j]       ) & 0xff;
+        ptByteArray[i + j * 4    ] = (en[j] >>> 24) & 0xff;
+        ptByteArray[i + j * 4 + 1] = (en[j] >>> 16) & 0xff;
+        ptByteArray[i + j * 4 + 2] = (en[j] >>>  8) & 0xff;
+        ptByteArray[i + j * 4 + 3] = (en[j]       ) & 0xff;
         // dart format on
       }
       en = cipher(ptI32Array, expansionKey);
     }
 
-    return Uint8List.fromList(output);
+    return ptByteArray;
+    // return Uint8List.fromList(output);
   }
 
   static List<int> invCfb(
