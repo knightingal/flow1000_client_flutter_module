@@ -68,18 +68,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
     if (albumInfoList.isEmpty) {
       body = Text("AlbumIndexPage");
     } else {
-      body = NotificationListener(
-        onNotification: (n) {
-          if (n is ScrollEndNotification) {
-            // ScrollModel scrollModel = Provider.of(context, listen: false);
-            // scrollModel.stopScrolling();
-          } else if (n is ScrollStartNotification) {
-            // ScrollModel scrollModel = Provider.of(context, listen: false);
-            // scrollModel.startScrolling();
-          }
-          return true;
-        },
-        child: CustomScrollViewExample(
+      body =  CustomScrollViewExample(
         slots: slot, 
         builder: (BuildContext context, int index) {
           // return Container(
@@ -99,7 +88,6 @@ class AlbumIndexState extends State<AlbumIndexPage> {
         }, 
         totalLength: albumInfoList.length
       )      
-      )
       
       
       ;
