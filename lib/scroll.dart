@@ -5,9 +5,6 @@ import 'package:flutter/rendering.dart';
 
 import 'struct/slot.dart';
 
-/// Flutter code sample for [CustomScrollView].
-
-// void main() => runApp(const CustomScrollViewExampleApp());
 
 final List<Color> colorPiker = [Colors.red, Colors.green, Colors.blue, Colors.yellow];
 class CustomScrollViewExampleApp extends StatelessWidget {
@@ -75,16 +72,6 @@ class CustomScrollViewExample extends StatelessWidget {
             slots,
             key: centerKey,
             delegate: SliverChildBuilderDelegate(
-              // (BuildContext context, int index) {
-              //   return Container(
-              //     alignment: Alignment.center,
-              //     color: colorPiker[index % 4],
-              //     height: 100 + index % 4 * 20.0,
-              //     // height: 100 ,
-              //     width: 0,
-              //     child: Text('Item: $index'),
-              //   );
-              // },
               builder,
               childCount: totalLength,
             ),
