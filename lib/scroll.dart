@@ -57,14 +57,6 @@ class CustomScrollViewExample extends StatelessWidget {
     const Key centerKey = ValueKey<String>('bottom-sliver-list');
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Press on the plus to add items above and below'),
-        leading: IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-          },
-        ),
-      ),
       body: CustomScrollView(
         center: centerKey,
         slivers: <Widget>[
