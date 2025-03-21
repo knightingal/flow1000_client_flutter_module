@@ -104,20 +104,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      // body:  CustomScrollViewExample(
-      //   slots: slot, 
-      //   builder: (BuildContext context, int index) {
-      //     return Container(
-      //       alignment: Alignment.center,
-      //       color: colorPiker[index % 4],
-      //       height: 100 + index % 4 * 20.0,
-      //       // height: 100 ,
-      //       width: 0,
-      //       child: Text('Item: $index'),
-      //     );
-      //   }, 
-      //   totalLength: totalLength
-      // ),
       body: AlbumIndexPage(),
       // body: EncriptImageWidget(),
       // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),
