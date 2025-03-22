@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flow1000_admin/scroll.dart';
 import 'package:flow1000_admin/struct/album_info.dart';
-import 'package:flow1000_admin/widget/encript_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -69,13 +68,14 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       body =  CustomScrollViewExample(
         slots: slot, 
         builder: (BuildContext context, int index) {
-          return ImageEx.network(albumInfoList[index].toCoverUrl(), width: albumInfoList[index].realWidth, height: albumInfoList[index].realHeight,);
+          return Image.network(
+            albumInfoList[index].toCoverUrl(), 
+            width: albumInfoList[index].realWidth, 
+            height: albumInfoList[index].realHeight,
+          );
         }, 
         totalLength: albumInfoList.length
-      )      
-      
-      
-      ;
+      );
     }
     return body;
   }
