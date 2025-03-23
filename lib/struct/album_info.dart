@@ -1,3 +1,12 @@
+Map<String, String> albumMap = {
+  "1000": "source",
+  "1803": "1803",
+  "1804": "1804",
+  "1805": "1805",
+  "1806": "1806",
+  "1807": "1807",
+};
+
 class AlbumInfo {
   final int index;
   final String name;
@@ -11,7 +20,7 @@ class AlbumInfo {
 
   String toCoverUrl() {
     // return "http://192.168.2.12:3002/linux1000/encrypted/$name/$cover";
-    return "http://192.168.2.12:3002/linux1000/source/$name/${cover.replaceAll(".bin", "")}";
+    return "http://192.168.2.12:3002/linux1000/${albumMap[album]}/$name/${cover.replaceAll(".bin", "")}";
   }
 
 
