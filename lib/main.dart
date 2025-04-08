@@ -59,33 +59,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  final int totalLength = 200;
-
-  final List<Slot> slot = [Slot(), Slot(),Slot(),Slot(), Slot(), Slot(),Slot(),Slot()];
 
   @override
   Widget build(BuildContext context) {
 
-    for (int i = 0; i < totalLength; i++) {
-      int slotIndex = minSlot(slot);
-      Slot slotOne = slot[slotIndex];
-      slotOne.slotItemList
-          .add(SlotItem(i, slotOne.totalHeight, 100 + i % 4 * 20.0, slotIndex));
-      slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
-    }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -106,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // body: EncriptImageWidget(),
       // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () => {},
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
