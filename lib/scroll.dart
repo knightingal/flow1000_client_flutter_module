@@ -110,8 +110,8 @@ int maxSlotByRenderIndex(List<Slot> slot, int renderIndex) {
 
 int maxSlot(List<Slot> slot) {
   double max = 0;
-  int index = 5;
-  for (int i = 0; i < 8; i++) {
+  int index = slot.length + 1;
+  for (int i = 0; i < slot.length; i++) {
     if (slot[i].totalHeight > max) {
       max = slot[i].totalHeight;
       index = i;
@@ -121,7 +121,7 @@ int maxSlot(List<Slot> slot) {
 }
 
 SlotItem? findSlotByIndex(List<Slot> slot, int index) {
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < slot.length; i++) {
     if (slot[i].existByIndex(index)) {
       return slot[i].itemByIndex(index);
     }
@@ -154,7 +154,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
   @override
   void performLayout() {
     log("enter performLayout()");
-    List<double> slotHeight = [0, 0, 0, 0, 0, 0, 0, 0];
+    List<double> slotHeight = List.generate(slot.length, (_) => 0);
     double minSlotHeight() {
       double min = slotHeight[0];
       for (int i = 0; i < slotHeight.length; i++) {
@@ -183,19 +183,12 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
       maxHeight: tmpConstraints.maxHeight,
       minHeight: tmpConstraints.minHeight,
       maxWidth: tmpConstraints.maxWidth,
-      minWidth: tmpConstraints.minWidth / 8,
+      minWidth: tmpConstraints.minWidth / slotHeight.length,
     );
     // int leadingGarbage = 0;
     // int trailingGarbage = 0;
     int findFirstIndex() {
-      int totalLength = slot[0].slotItemList.length +
-          slot[1].slotItemList.length +
-          slot[2].slotItemList.length +
-          slot[3].slotItemList.length +
-          slot[4].slotItemList.length +
-          slot[5].slotItemList.length +
-          slot[6].slotItemList.length +
-          slot[7].slotItemList.length;
+      int totalLength = slot.fold(0, (v, e) => v + e.slotItemList.length);
       for (int i = 0; i < totalLength; i++) {
         SlotItem slotItem = findSlotByIndex(slot, i)!;
         if (slotItem.itemHeight + slotItem.scrollOffset > scrollOffset) {
@@ -216,7 +209,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
       SlotItem? slotItem = findSlotByIndex(slot, childParentData.index!);
       childParentData.layoutOffset = slotItem!.scrollOffset;
       childParentData.crossOffSet =
-          slotItem.slotIndex * tmpConstraints.minWidth / 4;
+          slotItem.slotIndex * tmpConstraints.minWidth / slotHeight.length;
     } else if (firstIndex <
         (firstChild!.parentData! as _RenderSliverWaterFallParentData).index!) {
       while (true) {
@@ -227,7 +220,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
         SlotItem? slotItem = findSlotByIndex(slot, childParentData.index!);
         childParentData.layoutOffset = slotItem!.scrollOffset;
         childParentData.crossOffSet =
-            slotItem.slotIndex * tmpConstraints.minWidth / 8;
+            slotItem.slotIndex * tmpConstraints.minWidth / slotHeight.length;
         if (childParentData.index == firstIndex) {
           break;
         }
@@ -252,7 +245,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
       SlotItem? slotItem = findSlotByIndex(slot, childParentData.index!);
       childParentData.layoutOffset = slotItem!.scrollOffset;
       childParentData.crossOffSet =
-          slotItem.slotIndex * tmpConstraints.minWidth / 8;
+          slotItem.slotIndex * tmpConstraints.minWidth / slotHeight.length;
       slotHeight[slotItem.slotIndex] =
           slotItem.scrollOffset + slotItem.itemHeight;
       lastChild = child;
