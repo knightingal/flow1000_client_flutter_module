@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final int totalLength = 200;
 
-  final List<Slot> slot = [Slot(), Slot(),Slot(),Slot()];
+  final List<Slot> slot = [Slot(), Slot(),Slot(),Slot(), Slot(), Slot(),Slot(),Slot()];
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: AlbumGridPage(),
+      body: AlbumIndexPage(),
       // body: EncriptImageWidget(),
       // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),
       floatingActionButton: FloatingActionButton(
