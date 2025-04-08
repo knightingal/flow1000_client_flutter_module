@@ -69,6 +69,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
         slots: slot, 
         builder: (BuildContext context, int index) {
           return Image.network(
+            key: Key("image-$index"),
             albumInfoList[index].toCoverUrl(), 
             width: albumInfoList[index].realWidth, 
             height: albumInfoList[index].realHeight,
