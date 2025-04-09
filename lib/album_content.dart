@@ -23,30 +23,29 @@ class AlbumContentPage extends StatefulWidget {
 class AlbumContentPageState extends State<AlbumContentPage> {
 
   late double width;
-  Future<List<AlbumInfo>> fetchAlbumIndex() async {
+  Future<SectionDetail> fetchAlbumIndex() async {
     final response = await http.get(Uri.parse(albumContentUrl(widget.albumIndex)));
     if (response.statusCode == 200) {
-      List<dynamic> jsonArray = jsonDecode(response.body);
-      List<AlbumInfo> albumInfoList = jsonArray.map((e) => AlbumInfo.fromJson(e)).toList();
+      dynamic jsonArray = jsonDecode(response.body);
+      SectionDetail albumInfoList = SectionDetail.fromJson(jsonArray);
       return albumInfoList;
     } else {
       throw Exception("Failed to load album");
     }
   }
 
-  late Future<List<AlbumInfo>> futureAblumList;
 
-  List<AlbumInfo> albumInfoList = [];
+  SectionDetail? albumInfoList;
   List<Slot> slot = [Slot()];
 
   @override
   void initState() {
     super.initState();
     fetchAlbumIndex().then((albumInfoList) {
-      for (int i = 0; i < albumInfoList.length; i++) {
-        AlbumInfo albumInfo = albumInfoList[i];
+      for (int i = 0; i < albumInfoList.pics.length; i++) {
+        ImgDetail albumInfo = albumInfoList.pics[i];
         double coverWidth = width / slot.length;
-        double coverHeight = albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
+        double coverHeight = albumInfo.height * (coverWidth / albumInfo.width);
         // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
@@ -68,7 +67,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     Widget body;
-    if (albumInfoList.isEmpty) {
+    if (albumInfoList!.pics.isEmpty) {
       body = Text("AlbumIndexPage");
     } else {
       body = CustomScrollViewExample(
@@ -76,12 +75,12 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         builder: (BuildContext context, int index) {
           return Image.network(
             key: Key("content-$index"),
-            albumInfoList[index].toCoverUrl(), 
-            width: albumInfoList[index].realWidth, 
-            height: albumInfoList[index].realHeight,
+            albumInfoList!.pics[index].toString(), 
+            width: albumInfoList!.pics[index].realWidth, 
+            height: albumInfoList!.pics[index].realHeight,
           );
         }, 
-        totalLength: albumInfoList.length
+        totalLength: albumInfoList!.pics.length
       );
     }
     return body;
