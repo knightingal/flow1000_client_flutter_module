@@ -7,6 +7,43 @@ Map<String, String> albumMap = {
   "1807": "1807",
 };
 
+class SectionDetail {
+  final String dirName;
+  final String picPage;
+  final List<ImgDetail> pics;
+  final String album;
+
+  SectionDetail({required this.dirName, required this.picPage, required this.pics, required this.album});
+
+  factory SectionDetail.fromJson(Map<String, dynamic> json) {
+    return SectionDetail(
+      dirName: json["dirName"], 
+      picPage: json["picPage"], 
+      pics: (json["pics"] as List<dynamic>).map((e) => ImgDetail.fromJson(e)).toList(), 
+      album: json["album"]
+    );
+  }
+}
+
+class ImgDetail {
+  final String name;
+  final int width;
+  final int height;
+  double realHeight = 0;
+  double realWidth = 0;
+
+  ImgDetail({required this.name, required this.width, required this.height});
+
+  factory ImgDetail.fromJson(Map<String, dynamic> json) {
+    return ImgDetail(
+      name: json["name"], 
+      width: json["width"], 
+      height: json["height"]
+      
+    );
+  }
+}
+
 class AlbumInfo {
   final int index;
   final String name;
