@@ -7,6 +7,8 @@ import 'config.dart';
 import 'struct/album_info.dart';
 
 class AlbumGridPage extends StatefulWidget {
+  const AlbumGridPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return AlbumGridPageState();
