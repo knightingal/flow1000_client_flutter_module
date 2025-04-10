@@ -25,7 +25,7 @@ class Slot {
 int minSlot(List<Slot> slot) {
   double min = slot[0].totalHeight;
   int index = 0;
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < slot.length; i++) {
     if (slot[i].totalHeight < min) {
       min = slot[i].totalHeight;
       index = i;
