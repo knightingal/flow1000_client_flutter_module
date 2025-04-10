@@ -67,7 +67,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     Widget body;
-    if (albumInfoList!.pics.isEmpty) {
+    if (albumInfoList == null || albumInfoList!.pics.isEmpty) {
       body = Text("AlbumIndexPage");
     } else {
       body = CustomScrollViewExample(
@@ -75,7 +75,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         builder: (BuildContext context, int index) {
           return Image.network(
             key: Key("content-$index"),
-            albumInfoList!.pics[index].toString(), 
+            albumInfoList!.pics[index].toUrl(albumInfoList!), 
             width: albumInfoList!.pics[index].realWidth, 
             height: albumInfoList!.pics[index].realHeight,
           );
