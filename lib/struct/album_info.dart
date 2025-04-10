@@ -9,7 +9,7 @@ Map<String, String> albumMap = {
 
 class SectionDetail {
   final String dirName;
-  final String picPage;
+  final int picPage;
   final List<ImgDetail> pics;
   final String album;
 
@@ -32,14 +32,17 @@ class ImgDetail {
   double realHeight = 0;
   double realWidth = 0;
 
+  String toUrl(SectionDetail sectionDetail) {
+    return "http://192.168.2.12:3002/linux1000/${albumMap[sectionDetail.album]}/${sectionDetail.dirName}/${name.replaceAll(".bin", "")}";
+  }
+
   ImgDetail({required this.name, required this.width, required this.height});
 
   factory ImgDetail.fromJson(Map<String, dynamic> json) {
     return ImgDetail(
       name: json["name"], 
       width: json["width"], 
-      height: json["height"]
-      
+      height: json["height"],
     );
   }
 }
