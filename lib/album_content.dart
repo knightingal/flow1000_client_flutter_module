@@ -36,7 +36,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
 
 
   SectionDetail? albumInfoList;
-  List<Slot> slot = [Slot()];
+  List<Slot> slot = [Slot(), Slot()];
 
   @override
   void initState() {
