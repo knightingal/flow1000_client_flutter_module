@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flow1000_admin/album_content.dart';
+import 'package:flow1000_admin/album_grid.dart';
 import 'package:flow1000_admin/scroll.dart';
 import 'package:flow1000_admin/struct/album_info.dart';
 import 'package:flutter/material.dart';
@@ -68,11 +70,22 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       body =  CustomScrollViewExample(
         slots: slot, 
         builder: (BuildContext context, int index) {
-          return Image.network(
-            key: Key("image-$index"),
-            albumInfoList[index].toCoverUrl(), 
-            width: albumInfoList[index].realWidth, 
-            height: albumInfoList[index].realHeight,
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) 
+                    => AlbumContentPage(albumIndex: albumInfoList[index].index)
+                )
+              );
+            },
+            child: Image.network(
+              key: Key("image-$index"),
+              albumInfoList[index].toCoverUrl(), 
+              width: albumInfoList[index].realWidth, 
+              height: albumInfoList[index].realHeight,
+            ),
           );
         }, 
         totalLength: albumInfoList.length

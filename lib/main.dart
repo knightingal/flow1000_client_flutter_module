@@ -1,3 +1,4 @@
+import 'package:flow1000_admin/album_content.dart';
 import 'package:flow1000_admin/album_grid.dart';
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,7 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: AlbumIndexPage(),
+      // body: AlbumContentPage(albumIndex: 5,),
       // body: EncriptImageWidget(),
       // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),
       floatingActionButton: FloatingActionButton(
