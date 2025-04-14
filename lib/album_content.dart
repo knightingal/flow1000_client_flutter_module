@@ -36,7 +36,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
 
 
   SectionDetail? albumInfoList;
-  List<Slot> slot = [Slot(), Slot()];
+  List<Slot> slot = [Slot()];
 
   @override
   void initState() {
@@ -44,8 +44,16 @@ class AlbumContentPageState extends State<AlbumContentPage> {
     fetchAlbumIndex().then((albumInfoList) {
       for (int i = 0; i < albumInfoList.pics.length; i++) {
         ImgDetail albumInfo = albumInfoList.pics[i];
-        double coverWidth = width / slot.length;
-        double coverHeight = albumInfo.height * (coverWidth / albumInfo.width);
+        double coverHeight;
+        double coverWidth;
+        if (slot.length == 1 && width > albumInfo.width) {
+          coverWidth = albumInfo.width.toDouble();
+          coverHeight = albumInfo.height.toDouble();
+        } else {
+          coverWidth = width / slot.length;
+          coverHeight = albumInfo.height * (coverWidth / albumInfo.width);
+        }
+
         // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
