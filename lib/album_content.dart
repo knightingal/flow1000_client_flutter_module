@@ -17,14 +17,14 @@ class AlbumContentPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return AlbumContentPageState();
   }
-
 }
 
 class AlbumContentPageState extends State<AlbumContentPage> {
-
   late double width;
   Future<SectionDetail> fetchAlbumIndex() async {
-    final response = await http.get(Uri.parse(albumContentUrl(widget.albumIndex)));
+    final response = await http.get(
+      Uri.parse(albumContentUrl(widget.albumIndex)),
+    );
     if (response.statusCode == 200) {
       dynamic jsonArray = jsonDecode(response.body);
       SectionDetail albumInfoList = SectionDetail.fromJson(jsonArray);
@@ -33,7 +33,6 @@ class AlbumContentPageState extends State<AlbumContentPage> {
       throw Exception("Failed to load album");
     }
   }
-
 
   SectionDetail? albumInfoList;
   List<Slot> slot = [Slot()];
@@ -60,15 +59,15 @@ class AlbumContentPageState extends State<AlbumContentPage> {
 
         int slotIndex = minSlot(slot);
         Slot slotOne = slot[slotIndex];
-        slotOne.slotItemList
-            .add(SlotItem(i, slotOne.totalHeight, coverHeight, slotIndex));
+        slotOne.slotItemList.add(
+          SlotItem(i, slotOne.totalHeight, coverHeight, slotIndex),
+        );
         slotOne.totalHeight = slotOne.totalHeight + coverHeight;
       }
       setState(() {
         this.albumInfoList = albumInfoList;
       });
     });
-
   }
 
   @override
@@ -79,19 +78,18 @@ class AlbumContentPageState extends State<AlbumContentPage> {
       body = Text("AlbumIndexPage");
     } else {
       body = CustomScrollViewExample(
-        slots: slot, 
+        slots: slot,
         builder: (BuildContext context, int index) {
           return Image.network(
             key: Key("content-$index"),
-            albumInfoList!.pics[index].toUrl(albumInfoList!), 
-            width: albumInfoList!.pics[index].realWidth, 
+            albumInfoList!.pics[index].toUrl(albumInfoList!),
+            width: albumInfoList!.pics[index].realWidth,
             height: albumInfoList!.pics[index].realHeight,
           );
-        }, 
-        totalLength: albumInfoList!.pics.length
+        },
+        totalLength: albumInfoList!.pics.length,
       );
     }
     return body;
   }
-  
 }
