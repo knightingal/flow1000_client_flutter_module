@@ -5,31 +5,42 @@ import 'package:flutter/rendering.dart';
 
 import 'struct/slot.dart';
 
+final List<Color> colorPiker = [
+  Colors.red,
+  Colors.green,
+  Colors.blue,
+  Colors.yellow,
+];
 
-final List<Color> colorPiker = [Colors.red, Colors.green, Colors.blue, Colors.yellow];
 class CustomScrollViewExampleApp extends StatelessWidget {
   CustomScrollViewExampleApp({super.key});
 
   final int totalLength = 200;
 
   final List<Slot> slot = [
-    Slot(), Slot(),Slot(),Slot(),
-    Slot(), Slot(),Slot(),Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
   ];
 
   @override
   Widget build(BuildContext context) {
-
     for (int i = 0; i < totalLength; i++) {
       int slotIndex = minSlot(slot);
       Slot slotOne = slot[slotIndex];
-      slotOne.slotItemList
-          .add(SlotItem(i, slotOne.totalHeight, 100 + i % 4 * 20.0, slotIndex));
+      slotOne.slotItemList.add(
+        SlotItem(i, slotOne.totalHeight, 100 + i % 4 * 20.0, slotIndex),
+      );
       slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
     }
     return MaterialApp(
       home: CustomScrollViewExample(
-        slots: slot, 
+        slots: slot,
         builder: (BuildContext context, int index) {
           return Container(
             alignment: Alignment.center,
@@ -39,20 +50,25 @@ class CustomScrollViewExampleApp extends StatelessWidget {
             width: 0,
             child: Text('Item: $index'),
           );
-        }, 
-        totalLength: totalLength
+        },
+        totalLength: totalLength,
       ),
     );
   }
 }
 
 class CustomScrollViewExample extends StatelessWidget {
-  const CustomScrollViewExample({super.key, required this.slots, required this.builder, required this.totalLength});
+  const CustomScrollViewExample({
+    super.key,
+    required this.slots,
+    required this.builder,
+    required this.totalLength,
+  });
 
   final List<Slot> slots;
 
   final Widget? Function(BuildContext, int) builder;
-  
+
   final int totalLength;
 
   @override
@@ -70,7 +86,7 @@ class CustomScrollViewExample extends StatelessWidget {
               builder,
               childCount: totalLength,
             ),
-          )
+          ),
         ],
       ),
     );
@@ -93,7 +109,6 @@ class SliverWaterFall extends SliverMultiBoxAdaptorWidget {
 class _RenderSliverWaterFallParentData extends SliverMultiBoxAdaptorParentData {
   double? crossOffSet;
 }
-
 
 int maxSlotByRenderIndex(List<Slot> slot, int renderIndex) {
   double maxHeight = 0;
@@ -171,7 +186,9 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
 
     // final double scrollOffset = constraints.scrollOffset + constraints.cacheOrigin;
     final double scrollOffset = constraints.scrollOffset + padding;
-    log("scrollOffset:$scrollOffset, constraints.scrollOffset:${constraints.scrollOffset}, constraints.cacheOrigin:${constraints.cacheOrigin}");
+    log(
+      "scrollOffset:$scrollOffset, constraints.scrollOffset:${constraints.scrollOffset}, constraints.cacheOrigin:${constraints.cacheOrigin}",
+    );
     assert(scrollOffset >= 0.0);
     // final double remainingExtent = constraints.remainingCacheExtent;
     final double remainingExtent = constraints.remainingPaintExtent;
@@ -213,8 +230,10 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     } else if (firstIndex <
         (firstChild!.parentData! as _RenderSliverWaterFallParentData).index!) {
       while (true) {
-        RenderBox? child =
-            insertAndLayoutLeadingChild(childConstraints, parentUsesSize: true);
+        RenderBox? child = insertAndLayoutLeadingChild(
+          childConstraints,
+          parentUsesSize: true,
+        );
         childParentData =
             child!.parentData! as _RenderSliverWaterFallParentData;
         SlotItem? slotItem = findSlotByIndex(slot, childParentData.index!);
@@ -233,8 +252,11 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     while (true) {
       child = childAfter(lastChild!);
       if (child == null) {
-        child = insertAndLayoutChild(childConstraints,
-            after: lastChild, parentUsesSize: true);
+        child = insertAndLayoutChild(
+          childConstraints,
+          after: lastChild,
+          parentUsesSize: true,
+        );
         if (child == null) {
           break;
         }
@@ -254,8 +276,9 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
       }
     }
     int trailingGarbage = calculateTrailingGarbage(
-        lastIndex:
-            (lastChild.parentData as _RenderSliverWaterFallParentData).index!);
+      lastIndex:
+          (lastChild.parentData as _RenderSliverWaterFallParentData).index!,
+    );
     int leadingGarbage = calculateLeadingGarbage(firstIndex: firstIndex);
     collectGarbage(leadingGarbage, trailingGarbage);
 
@@ -313,24 +336,32 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
   void paint(PaintingContext context, Offset offset) {
     super.paint(context, offset);
     Offset p1 = Offset(offset.dx, offset.dy + padding);
-    Offset p2 =
-        Offset(offset.dx + constraints.crossAxisExtent, offset.dy + padding);
+    Offset p2 = Offset(
+      offset.dx + constraints.crossAxisExtent,
+      offset.dy + padding,
+    );
     context.canvas.drawLine(
-        p1,
-        p2,
-        Paint()
-          ..color = Colors.red
-          ..strokeWidth = 2);
+      p1,
+      p2,
+      Paint()
+        ..color = Colors.red
+        ..strokeWidth = 2,
+    );
 
-    Offset p3 =
-        Offset(offset.dx, offset.dy + constraints.remainingPaintExtent - padding);
-    Offset p4 = Offset(offset.dx + constraints.crossAxisExtent,
-        offset.dy + constraints.remainingPaintExtent - padding);
+    Offset p3 = Offset(
+      offset.dx,
+      offset.dy + constraints.remainingPaintExtent - padding,
+    );
+    Offset p4 = Offset(
+      offset.dx + constraints.crossAxisExtent,
+      offset.dy + constraints.remainingPaintExtent - padding,
+    );
     context.canvas.drawLine(
-        p3,
-        p4,
-        Paint()
-          ..color = Colors.red
-          ..strokeWidth = 2);
+      p3,
+      p4,
+      Paint()
+        ..color = Colors.red
+        ..strokeWidth = 2,
+    );
   }
 }
