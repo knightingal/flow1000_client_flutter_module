@@ -34,13 +34,14 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   }
 
   List<AlbumInfo> albumInfoList = [];
-  // List<Slot> slot = [Slot(), Slot(), Slot(), Slot(), Slot(), Slot(), Slot(), Slot()];
   late List<Slot> slot;
 
   @override
   void initState() {
     super.initState();
     fetchAlbumIndex().then((albumInfoList) {
+      var length = (width > 1500) ? 8 : 4;
+      slot = List.generate(length, (index) => Slot(), growable: false);
       for (int i = 0; i < albumInfoList.length; i++) {
         AlbumInfo albumInfo = albumInfoList[i];
         double coverWidth = width / slot.length;
@@ -66,8 +67,6 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
-    var length = (width > 1500) ? 8 : 4;
-    slot = List.generate(length, (index) => Slot(), growable: false);
     Widget body;
     if (albumInfoList.isEmpty) {
       body = Text("AlbumIndexPage");
