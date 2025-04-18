@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flow1000_admin/album_content.dart';
-import 'package:flow1000_admin/album_grid.dart';
 import 'package:flow1000_admin/scroll.dart';
 import 'package:flow1000_admin/struct/album_info.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'config.dart';
 import 'struct/slot.dart';
 
-class AlbumIndexPage extends StatefulWidget{
+class AlbumIndexPage extends StatefulWidget {
   const AlbumIndexPage({super.key});
 
   @override
@@ -26,7 +25,8 @@ class AlbumIndexState extends State<AlbumIndexPage> {
     final response = await http.get(Uri.parse(albumIndexUrl()));
     if (response.statusCode == 200) {
       List<dynamic> jsonArray = jsonDecode(response.body);
-      List<AlbumInfo> albumInfoList = jsonArray.map((e) => AlbumInfo.fromJson(e)).toList();
+      List<AlbumInfo> albumInfoList =
+          jsonArray.map((e) => AlbumInfo.fromJson(e)).toList();
       return albumInfoList;
     } else {
       throw Exception("Failed to load album");
@@ -34,7 +34,8 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   }
 
   List<AlbumInfo> albumInfoList = [];
-  List<Slot> slot = [Slot(), Slot(), Slot(), Slot(), Slot(), Slot(), Slot(), Slot()];
+  // List<Slot> slot = [Slot(), Slot(), Slot(), Slot(), Slot(), Slot(), Slot(), Slot()];
+  late List<Slot> slot;
 
   @override
   void initState() {
@@ -43,15 +44,17 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       for (int i = 0; i < albumInfoList.length; i++) {
         AlbumInfo albumInfo = albumInfoList[i];
         double coverWidth = width / slot.length;
-        double coverHeight = albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
+        double coverHeight =
+            albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
         // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
 
         int slotIndex = minSlot(slot);
         Slot slotOne = slot[slotIndex];
-        slotOne.slotItemList
-            .add(SlotItem(i, slotOne.totalHeight, coverHeight, slotIndex));
+        slotOne.slotItemList.add(
+          SlotItem(i, slotOne.totalHeight, coverHeight, slotIndex),
+        );
         slotOne.totalHeight = slotOne.totalHeight + coverHeight;
       }
       setState(() {
@@ -63,37 +66,40 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
+    var length = (width > 1500) ? 8 : 4;
+    slot = List.generate(length, (index) => Slot(), growable: false);
     Widget body;
     if (albumInfoList.isEmpty) {
       body = Text("AlbumIndexPage");
     } else {
-      body =  CustomScrollViewExample(
-        slots: slot, 
+      body = CustomScrollViewExample(
+        slots: slot,
         builder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
               Navigator.push(
-                context, 
+                context,
                 MaterialPageRoute(
-                  builder: (context) 
-                    => AlbumContentPage(albumIndex: albumInfoList[index].index)
-                )
+                  builder:
+                      (context) => AlbumContentPage(
+                        albumIndex: albumInfoList[index].index,
+                      ),
+                ),
               );
             },
             child: Image.network(
               key: Key("image-$index"),
-              albumInfoList[index].toCoverUrl(), 
-              width: albumInfoList[index].realWidth, 
+              albumInfoList[index].toCoverUrl(),
+              width: albumInfoList[index].realWidth,
               height: albumInfoList[index].realHeight,
             ),
           );
-        }, 
-        totalLength: albumInfoList.length
+        },
+        totalLength: albumInfoList.length,
       );
     }
     return body;
   }
-  
 }
 
 class DirItem extends StatelessWidget {
