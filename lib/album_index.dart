@@ -36,6 +36,8 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   List<AlbumInfo> albumInfoList = [];
   late List<Slot> slot;
 
+  final int coverPadding = 8;
+
   @override
   void initState() {
     super.initState();
@@ -44,19 +46,22 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       slot = List.generate(length, (index) => Slot(), growable: false);
       for (int i = 0; i < albumInfoList.length; i++) {
         AlbumInfo albumInfo = albumInfoList[i];
-        double coverWidth = width / slot.length;
+        double coverWidth = width / slot.length - coverPadding;
         double coverHeight =
             albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
         // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
 
+        albumInfo.frameWidth = width / slot.length;
+        albumInfo.frameHeight = albumInfo.realHeight + coverPadding;
+
         int slotIndex = minSlot(slot);
         Slot slotOne = slot[slotIndex];
         slotOne.slotItemList.add(
-          SlotItem(i, slotOne.totalHeight, coverHeight, slotIndex),
+          SlotItem(i, slotOne.totalHeight, albumInfo.frameHeight, slotIndex),
         );
-        slotOne.totalHeight = slotOne.totalHeight + coverHeight;
+        slotOne.totalHeight = slotOne.totalHeight + albumInfo.frameHeight;
       }
       setState(() {
         this.albumInfoList = albumInfoList;

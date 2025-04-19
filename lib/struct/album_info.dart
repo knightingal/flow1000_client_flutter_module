@@ -65,6 +65,8 @@ class AlbumInfo {
   final String clientStatus;
   double realWidth = 0;
   double realHeight = 0;
+  double frameWidth = 0;
+  double frameHeight = 0;
 
   String toCoverUrl() {
     // return "http://192.168.2.12:3002/linux1000/encrypted/$name/$cover";
