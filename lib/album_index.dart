@@ -91,11 +91,20 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                 ),
               );
             },
-            child: Image.network(
-              key: Key("image-$index"),
-              albumInfoList[index].toCoverUrl(),
-              width: albumInfoList[index].realWidth,
-              height: albumInfoList[index].realHeight,
+            child: SizedBox.fromSize(
+              size: Size(
+                albumInfoList[index].realWidth,
+                albumInfoList[index].realHeight,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: Image.network(
+                  key: Key("image-$index"),
+                  albumInfoList[index].toCoverUrl(),
+                  width: albumInfoList[index].realWidth,
+                  height: albumInfoList[index].realHeight,
+                ),
+              ),
             ),
           );
         },
