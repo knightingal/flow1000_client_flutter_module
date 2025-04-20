@@ -97,7 +97,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                 albumInfoList[index].realHeight,
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(0),
+                borderRadius: BorderRadius.circular(12.0),
                 child: Image.network(
                   key: Key("image-$index"),
                   albumInfoList[index].toCoverUrl(),

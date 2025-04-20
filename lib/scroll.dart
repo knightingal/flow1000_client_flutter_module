@@ -200,7 +200,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
       maxHeight: tmpConstraints.maxHeight,
       minHeight: tmpConstraints.minHeight,
       maxWidth: tmpConstraints.maxWidth,
-      minWidth: tmpConstraints.minWidth / slotHeight.length,
+      minWidth: 0,
     );
     // int leadingGarbage = 0;
     // int trailingGarbage = 0;
