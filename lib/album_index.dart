@@ -91,11 +91,8 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                 ),
               );
             },
-            child: SizedBox.fromSize(
-              size: Size(
-                albumInfoList[index].realWidth,
-                albumInfoList[index].realHeight,
-              ),
+            child: Container(
+              padding: EdgeInsets.all(coverPadding.toDouble() / 2),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: Image.network(
