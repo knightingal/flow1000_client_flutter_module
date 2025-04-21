@@ -90,6 +90,6 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         totalLength: albumInfoList!.pics.length,
       );
     }
-    return body;
+    return Scaffold(body: body);
   }
 }
