@@ -329,6 +329,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     // if (estimatedMaxScrollOffset == endScrollOffset) {
     //   childManager.setDidUnderflow(true);
     // }
+    childManager.setDidUnderflow(true);
     childManager.didFinishLayout();
   }
 
