@@ -168,6 +168,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
   void performLayout() {
     log("enter performLayout()");
     List<double> slotHeight = List.generate(slots.slots.length, (_) => 0);
+    // TODO: enhance this function
     double minSlotHeight() {
       double min = slotHeight[0];
       for (int i = 0; i < slotHeight.length; i++) {
@@ -202,6 +203,8 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     );
     // int leadingGarbage = 0;
     // int trailingGarbage = 0;
+
+    // TODO: enhance this function
     int findFirstIndex() {
       // int totalLength = slot.fold(0, (v, e) => v + e.slotItemList.length);
       int totalLength = slots.slotItemList.length;
