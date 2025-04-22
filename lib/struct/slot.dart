@@ -1,11 +1,11 @@
-
 class SlotItem {
   final int index;
-  final double scrollOffset;
+  late double scrollOffset;
   final double itemHeight;
-  final int slotIndex;
+  late int slotIndex;
+  late int indexInSlot;
 
-  SlotItem(this.index, this.scrollOffset, this.itemHeight, this.slotIndex);
+  SlotItem(this.index, this.itemHeight);
 }
 
 class Slot {
