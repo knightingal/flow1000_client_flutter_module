@@ -65,6 +65,7 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: AlbumIndexPage(),
+      // body: AlbumGridPage(),
       // body: AlbumContentPage(albumIndex: 5,),
       // body: EncriptImageWidget(),
       // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),

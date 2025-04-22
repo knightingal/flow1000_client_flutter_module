@@ -34,34 +34,35 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   }
 
   List<AlbumInfo> albumInfoList = [];
-  late List<Slot> slot;
+  // late List<Slot> slot;
 
   final int coverPadding = 8;
+  late SlotGroup slotGroup;
 
   @override
   void initState() {
     super.initState();
     fetchAlbumIndex().then((albumInfoList) {
       var length = (width > 1500) ? 8 : 4;
-      slot = List.generate(length, (index) => Slot(), growable: false);
+      slotGroup = SlotGroup.fromCount(length);
+      // slot = List.generate(length, (index) => Slot(), growable: false);
       for (int i = 0; i < albumInfoList.length; i++) {
         AlbumInfo albumInfo = albumInfoList[i];
-        double coverWidth = width / slot.length - coverPadding;
+        double coverWidth = width / length - coverPadding;
         double coverHeight =
             albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
         // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
 
-        albumInfo.frameWidth = width / slot.length;
+        albumInfo.frameWidth = width / length;
         albumInfo.frameHeight = albumInfo.realHeight + coverPadding;
 
-        int slotIndex = minSlot(slot);
-        Slot slotOne = slot[slotIndex];
-        slotOne.slotItemList.add(
-          SlotItem(i, slotOne.totalHeight, albumInfo.frameHeight, slotIndex),
-        );
-        slotOne.totalHeight = slotOne.totalHeight + albumInfo.frameHeight;
+        // int slotIndex = minSlot(slot);
+        // Slot slotOne = slot[slotIndex];
+        // slotOne.slotItemList.add(SlotItem(i, albumInfo.frameHeight));
+        // slotOne.totalHeight = slotOne.totalHeight + albumInfo.frameHeight;
+        slotGroup.insertSlotItem(SlotItem(i, albumInfo.frameHeight));
       }
       setState(() {
         this.albumInfoList = albumInfoList;
@@ -77,7 +78,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       body = Text("AlbumIndexPage");
     } else {
       body = CustomScrollViewExample(
-        slots: slot,
+        slots: slotGroup,
         builder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {

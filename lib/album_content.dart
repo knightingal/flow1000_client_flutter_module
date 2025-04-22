@@ -59,9 +59,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
 
         int slotIndex = minSlot(slot);
         Slot slotOne = slot[slotIndex];
-        slotOne.slotItemList.add(
-          SlotItem(i, slotOne.totalHeight, coverHeight, slotIndex),
-        );
+        slotOne.slotItemList.add(SlotItem(i, coverHeight));
         slotOne.totalHeight = slotOne.totalHeight + coverHeight;
       }
       setState(() {
@@ -74,22 +72,22 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     Widget body;
-    if (albumInfoList == null || albumInfoList!.pics.isEmpty) {
-      body = Text("AlbumIndexPage");
-    } else {
-      body = CustomScrollViewExample(
-        slots: slot,
-        builder: (BuildContext context, int index) {
-          return Image.network(
-            key: Key("content-$index"),
-            albumInfoList!.pics[index].toUrl(albumInfoList!),
-            width: albumInfoList!.pics[index].realWidth,
-            height: albumInfoList!.pics[index].realHeight,
-          );
-        },
-        totalLength: albumInfoList!.pics.length,
-      );
-    }
+    // if (albumInfoList == null || albumInfoList!.pics.isEmpty) {
+    body = Text("AlbumIndexPage");
+    // } else {
+    //   body = CustomScrollViewExample(
+    //     slots: slot,
+    //     builder: (BuildContext context, int index) {
+    //       return Image.network(
+    //         key: Key("content-$index"),
+    //         albumInfoList!.pics[index].toUrl(albumInfoList!),
+    //         width: albumInfoList!.pics[index].realWidth,
+    //         height: albumInfoList!.pics[index].realHeight,
+    //       );
+    //     },
+    //     totalLength: albumInfoList!.pics.length,
+    //   );
+    // }
     return Scaffold(body: body);
   }
 }
