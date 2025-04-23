@@ -35,7 +35,8 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   }
 
   SectionDetail? albumInfoList;
-  List<Slot> slot = [Slot()];
+  // List<Slot> slot = [Slot()];
+  SlotGroup slotGroup = SlotGroup.fromCount(1);
 
   @override
   void initState() {
@@ -45,11 +46,11 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         ImgDetail albumInfo = albumInfoList.pics[i];
         double coverHeight;
         double coverWidth;
-        if (slot.length == 1 && width > albumInfo.width) {
+        if (slotGroup.slots.length == 1 && width > albumInfo.width) {
           coverWidth = albumInfo.width.toDouble();
           coverHeight = albumInfo.height.toDouble();
         } else {
-          coverWidth = width / slot.length;
+          coverWidth = width / slotGroup.slots.length;
           coverHeight = albumInfo.height * (coverWidth / albumInfo.width);
         }
 
@@ -57,10 +58,12 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
 
-        int slotIndex = minSlot(slot);
-        Slot slotOne = slot[slotIndex];
-        slotOne.slotItemList.add(SlotItem(i, coverHeight));
-        slotOne.totalHeight = slotOne.totalHeight + coverHeight;
+        // int slotIndex = minSlot(slot);
+        // Slot slotOne = slot[slotIndex];
+        // slotOne.slotItemList.add(SlotItem(i, coverHeight));
+        // slotOne.totalHeight = slotOne.totalHeight + coverHeight;
+
+        slotGroup.insertSlotItem(SlotItem(i, albumInfo.realHeight));
       }
       setState(() {
         this.albumInfoList = albumInfoList;
@@ -72,22 +75,22 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     Widget body;
-    // if (albumInfoList == null || albumInfoList!.pics.isEmpty) {
-    body = Text("AlbumIndexPage");
-    // } else {
-    //   body = CustomScrollViewExample(
-    //     slots: slot,
-    //     builder: (BuildContext context, int index) {
-    //       return Image.network(
-    //         key: Key("content-$index"),
-    //         albumInfoList!.pics[index].toUrl(albumInfoList!),
-    //         width: albumInfoList!.pics[index].realWidth,
-    //         height: albumInfoList!.pics[index].realHeight,
-    //       );
-    //     },
-    //     totalLength: albumInfoList!.pics.length,
-    //   );
-    // }
+    if (albumInfoList == null || albumInfoList!.pics.isEmpty) {
+      body = Text("AlbumIndexPage");
+    } else {
+      body = CustomScrollViewExample(
+        slots: slotGroup,
+        builder: (BuildContext context, int index) {
+          return Image.network(
+            key: Key("content-$index"),
+            albumInfoList!.pics[index].toUrl(albumInfoList!),
+            width: albumInfoList!.pics[index].realWidth,
+            height: albumInfoList!.pics[index].realHeight,
+          );
+        },
+        totalLength: albumInfoList!.pics.length,
+      );
+    }
     return Scaffold(body: body);
   }
 }
