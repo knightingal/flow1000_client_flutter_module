@@ -74,10 +74,15 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
+    AppBar? appBar;
     Widget body;
     if (albumInfoList == null || albumInfoList!.pics.isEmpty) {
       body = Text("AlbumIndexPage");
     } else {
+      appBar = AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(albumInfoList!.dirName),
+      );
       body = CustomScrollViewExample(
         slots: slotGroup,
         builder: (BuildContext context, int index) {
@@ -91,6 +96,6 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         totalLength: albumInfoList!.pics.length,
       );
     }
-    return Scaffold(body: body);
+    return Scaffold(body: body, appBar: appBar);
   }
 }
