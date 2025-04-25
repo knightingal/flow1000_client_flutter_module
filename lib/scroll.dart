@@ -240,7 +240,6 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
         );
       } else {
         // scroll up
-        firstIndex = findFirstIndex(0);
         scrollDown = false;
       }
     }
@@ -257,16 +256,20 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
       childParentData.crossOffSet =
           slotItem.slotIndex * tmpConstraints.minWidth / slots.slots.length;
     } else if (!scrollDown) {
-      List<int> calFirstIndex() {
+      List<int> calShouldInsertSlotIndexs() {
         List<int> shouldInsertSlotIndexs = [];
         List<int> columnChecker = List.generate(
           slots.slots.length,
           (_) => -1,
           growable: false,
         );
-        int firstIndex = getRenderSliverWaterFallParentData(firstChild!).index!;
-        columnChecker[slots.slotItemList[firstIndex].slotIndex] = firstIndex;
-        int i = firstIndex + 1;
+
+        int currFirstIndex =
+            getRenderSliverWaterFallParentData(firstChild!).index!;
+        columnChecker[slots.slotItemList[currFirstIndex].slotIndex] =
+            currFirstIndex;
+
+        int i = currFirstIndex + 1;
         while (true) {
           SlotItem slotItem = slots.slotItemList[i];
           if (columnChecker[slotItem.slotIndex] == -1) {
@@ -286,7 +289,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
         return shouldInsertSlotIndexs;
       }
 
-      List<int> shouldInsertSlotIndexs = calFirstIndex();
+      List<int> shouldInsertSlotIndexs = calShouldInsertSlotIndexs();
       if (shouldInsertSlotIndexs.isEmpty) {
         firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
       } else {
@@ -310,6 +313,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
             shouldInsertSlotIndexs.remove(slotItem.slotIndex);
           }
           if (shouldInsertSlotIndexs.isEmpty) {
+            firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
             break;
           }
         }
