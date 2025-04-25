@@ -169,7 +169,6 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
   void performLayout() {
     log("enter performLayout()");
     List<double> slotHeight = List.generate(slots.slots.length, (_) => 0);
-    // TODO: enhance this function
     double minSlotHeight() {
       double min = slotHeight[0];
       for (int i = 0; i < slotHeight.length; i++) {
@@ -205,7 +204,6 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     // int leadingGarbage = 0;
     // int trailingGarbage = 0;
 
-    // TODO: enhance this function
     int findFirstIndex(int previusFirstIndex) {
       int startIndex =
           previusFirstIndex > 0 ? previusFirstIndex - 1 : previusFirstIndex;
@@ -254,46 +252,69 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
       firstChild!.layout(childConstraints, parentUsesSize: true);
       childParentData =
           firstChild!.parentData! as _RenderSliverWaterFallParentData;
-      // SlotItem? slotItem = findSlotByIndex(slot, childParentData.index!);
       SlotItem slotItem = slots.slotItemList[childParentData.index!];
       childParentData.layoutOffset = slotItem.scrollOffset;
       childParentData.crossOffSet =
           slotItem.slotIndex * tmpConstraints.minWidth / slots.slots.length;
-    } else if (firstIndex <
-        (firstChild!.parentData! as _RenderSliverWaterFallParentData).index!) {
-      // } else if (!scrollDown) {
-      // List<bool> columnChecker = List.generate(
-      //   slots.slots.length,
-      //   (_) => false,
-      //   growable: false,
-      // );
-
-      while (true) {
-        RenderBox? child = insertAndLayoutLeadingChild(
-          childConstraints,
-          parentUsesSize: true,
+    } else if (!scrollDown) {
+      List<int> calFirstIndex() {
+        List<int> shouldInsertSlotIndexs = [];
+        List<int> columnChecker = List.generate(
+          slots.slots.length,
+          (_) => -1,
+          growable: false,
         );
-        // if (child == null) {
-        //   break;
-        // }
-        childParentData =
-            child!.parentData! as _RenderSliverWaterFallParentData;
-        // SlotItem? slotItem = findSlotByIndex(slot, childParentData.index!);
-        SlotItem slotItem = slots.slotItemList[childParentData.index!];
-        childParentData.layoutOffset = slotItem.scrollOffset;
-        childParentData.crossOffSet =
-            slotItem.slotIndex * tmpConstraints.minWidth / slots.slots.length;
-        if (childParentData.index == firstIndex) {
-          break;
+        int firstIndex = getRenderSliverWaterFallParentData(firstChild!).index!;
+        columnChecker[slots.slotItemList[firstIndex].slotIndex] = firstIndex;
+        int i = firstIndex + 1;
+        while (true) {
+          SlotItem slotItem = slots.slotItemList[i];
+          if (columnChecker[slotItem.slotIndex] == -1) {
+            columnChecker[slotItem.slotIndex] = i;
+          }
+          if (!columnChecker.contains(-1)) {
+            break;
+          }
+          i++;
         }
-        // if (slotItem.scrollOffset > scrollOffset) {
-        //   columnChecker[slotItem.slotIndex] = true;
-        // }
-        // if (!columnChecker.contains(false)) {
-        //   firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
-        //   break;
-        // }
+        for (int i = 0; i < slots.slots.length; i++) {
+          if (slots.slotItemList[columnChecker[i]].scrollOffset >
+              scrollOffset) {
+            shouldInsertSlotIndexs.add(i);
+          }
+        }
+        return shouldInsertSlotIndexs;
       }
+
+      List<int> shouldInsertSlotIndexs = calFirstIndex();
+      if (shouldInsertSlotIndexs.isEmpty) {
+        firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
+      } else {
+        while (true) {
+          RenderBox? child = insertAndLayoutLeadingChild(
+            childConstraints,
+            parentUsesSize: true,
+          );
+          if (child == null) {
+            firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
+            break;
+          }
+          childParentData =
+              child.parentData! as _RenderSliverWaterFallParentData;
+          SlotItem slotItem = slots.slotItemList[childParentData.index!];
+          childParentData.layoutOffset = slotItem.scrollOffset;
+          childParentData.crossOffSet =
+              slotItem.slotIndex * tmpConstraints.minWidth / slots.slots.length;
+          if (slotItem.scrollOffset < scrollOffset &&
+              shouldInsertSlotIndexs.contains(slotItem.slotIndex)) {
+            shouldInsertSlotIndexs.remove(slotItem.slotIndex);
+          }
+          if (shouldInsertSlotIndexs.isEmpty) {
+            break;
+          }
+        }
+      }
+      // }
     }
 
     RenderBox? child;
