@@ -55,7 +55,7 @@ class MyHomePage extends StatelessWidget {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return DefaultTabController(
-      length: 2,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           // TRY THIS: Try changing the color here to a specific color (to
@@ -65,9 +65,27 @@ class MyHomePage extends StatelessWidget {
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text(title),
-          bottom: const TabBar(tabs: [Tab(text: "main"), Tab(text: "2nd")]),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: "main"),
+              Tab(text: "1803"),
+              Tab(text: "1804"),
+              Tab(text: "1805"),
+              Tab(text: "1806"),
+              Tab(text: "1807"),
+            ],
+          ),
         ),
-        body: const TabBarView(children: [AlbumIndexPage(), Text("2nd")]),
+        body: const TabBarView(
+          children: [
+            AlbumIndexPage(album: "1000"),
+            AlbumIndexPage(album: "1803"),
+            AlbumIndexPage(album: "1804"),
+            AlbumIndexPage(album: "1805"),
+            AlbumIndexPage(album: "1806"),
+            AlbumIndexPage(album: "1807"),
+          ],
+        ),
         // body: AlbumGridPage(),
         // body: AlbumContentPage(albumIndex: 5,),
         // body: EncriptImageWidget(),

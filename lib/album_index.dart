@@ -11,7 +11,9 @@ import 'config.dart';
 import 'struct/slot.dart';
 
 class AlbumIndexPage extends StatefulWidget {
-  const AlbumIndexPage({super.key});
+  const AlbumIndexPage({super.key, required this.album});
+
+  final String album;
 
   @override
   State<StatefulWidget> createState() {
@@ -22,7 +24,9 @@ class AlbumIndexPage extends StatefulWidget {
 class AlbumIndexState extends State<AlbumIndexPage> {
   late double width;
   Future<List<AlbumInfo>> fetchAlbumIndex() async {
-    final response = await http.get(Uri.parse(albumIndexUrl()));
+    final response = await http.get(
+      Uri.parse(albumIndexUrl(album: widget.album)),
+    );
     if (response.statusCode == 200) {
       List<dynamic> jsonArray = jsonDecode(response.body);
       List<AlbumInfo> albumInfoList =
