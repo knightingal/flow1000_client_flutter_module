@@ -41,10 +41,7 @@ class SlotGroup {
     slotItem.indexInSlot = slotItemList.length;
     slotItem.scrollOffset = slotOne.totalHeight;
 
-    slotOne.slotItemList.add(
-      // SlotItem(i, slotOne.totalHeight, albumInfo.frameHeight, slotIndex),
-      slotItem,
-    );
+    slotOne.slotItemList.add(slotItem);
     slotOne.totalHeight = slotOne.totalHeight + slotItem.itemHeight;
     slotItemList.add(slotItem);
   }

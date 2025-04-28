@@ -36,22 +36,7 @@ class CustomScrollViewExampleApp extends StatelessWidget {
       slotOne.slotItemList.add(SlotItem(i, 100 + i % 4 * 20.0));
       slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
     }
-    return MaterialApp(
-      // home: CustomScrollViewExample(
-      //   slots: slot,
-      //   builder: (BuildContext context, int index) {
-      //     return Container(
-      //       alignment: Alignment.center,
-      //       color: colorPiker[index % 4],
-      //       height: 100 + index % 4 * 20.0,
-      //       // height: 100 ,
-      //       width: 0,
-      //       child: Text('Item: $index'),
-      //     );
-      //   },
-      //   totalLength: totalLength,
-      // ),
-    );
+    return MaterialApp();
   }
 }
 
@@ -109,42 +94,6 @@ class _RenderSliverWaterFallParentData extends SliverMultiBoxAdaptorParentData {
   double? crossOffSet;
 }
 
-// int maxSlotByRenderIndex(List<Slot> slot, int renderIndex) {
-//   double maxHeight = 0;
-//   int maxIndex = 0;
-//   for (int i = 0; i <= renderIndex; i++) {
-//     SlotItem item = findSlotByIndex(slot, i)!;
-//     if (item.scrollOffset + item.itemHeight > maxHeight) {
-//       maxHeight = item.scrollOffset + item.itemHeight;
-//       maxIndex = i;
-//     }
-//   }
-//   return maxIndex;
-// }
-
-// int maxSlot(List<Slot> slot) {
-//   double max = 0;
-//   int index = slot.length + 1;
-//   for (int i = 0; i < slot.length; i++) {
-//     if (slot[i].totalHeight > max) {
-//       max = slot[i].totalHeight;
-//       index = i;
-//     }
-//   }
-//   return index;
-// }
-
-// SlotItem? findSlotByIndex(List<Slot> slot, int index) {
-//   for (int i = 0; i < slot.length; i++) {
-//     if (slot[i].existByIndex(index)) {
-//       return slot[i].itemByIndex(index);
-//     }
-//   }
-//   return null;
-// }
-
-// List<Slot> slot = [Slot(), Slot(), Slot(), Slot()];
-
 class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
   RenderSliverWaterFall(this.slots, {required super.childManager});
 
@@ -183,7 +132,6 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     childManager.didStartLayout();
     childManager.setDidUnderflow(false);
 
-    // final double scrollOffset = constraints.scrollOffset + constraints.cacheOrigin;
     final double scrollOffset = constraints.scrollOffset + padding;
     log(
       "scrollOffset:$scrollOffset, constraints.scrollOffset:${constraints.scrollOffset}, constraints.cacheOrigin:${constraints.cacheOrigin}",
@@ -276,15 +224,12 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
           }
           i++;
         }
-        List<int> shouldInsertSlotIndexs =
-            columnChecker
-                .where((checker) {
-                  return slots.slotItemList[checker].scrollOffset >
-                      scrollOffset;
-                })
-                .map((checker) => slots.slotItemList[checker].slotIndex)
-                .toList();
-        return shouldInsertSlotIndexs;
+        return columnChecker
+            .where((checker) {
+              return slots.slotItemList[checker].scrollOffset > scrollOffset;
+            })
+            .map((checker) => slots.slotItemList[checker].slotIndex)
+            .toList();
       }
 
       firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
@@ -355,54 +300,16 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     (firstChild!.parentData! as _RenderSliverWaterFallParentData).scrollOffset =
         scrollOffset;
 
-    // This algorithm in principle is straight-forward: find the first child
-    // that overlaps the given scrollOffset, creating more children at the top
-    // of the list if necessary, then walk down the list updating and laying out
-    // each child and adding more at the end if necessary until we have enough
-    // children to cover the entire viewport.
-    //
-    // It is complicated by one minor issue, which is that any time you update
-    // or create a child, it's possible that the some of the children that
-    // haven't yet been laid out will be removed, leaving the list in an
-    // inconsistent state, and requiring that missing nodes be recreated.
-    //
-    // To keep this mess tractable, this algorithm starts from what is currently
-    // the first child, if any, and then walks up and/or down from there, so
-    // that the nodes that might get removed are always at the edges of what has
-    // already been laid out.
-
-    // Make sure we have at least one child to start from.
-    // double estimatedMaxScrollOffset = slot[maxSlot(slot)].totalHeight;
     double estimatedMaxScrollOffset = slots.totalHeight();
-    // if (reachedEnd) {
-    //   estimatedMaxScrollOffset = endScrollOffset;
-    // } else {
-    //   estimatedMaxScrollOffset = childManager.estimateMaxScrollOffset(
-    //     constraints,
-    //     firstIndex: indexOf(firstChild!),
-    //     lastIndex: indexOf(lastChild!),
-    //     leadingScrollOffset: childScrollOffset(firstChild!),
-    //     trailingScrollOffset: endScrollOffset,
-    //   );
-    //   assert(estimatedMaxScrollOffset >= endScrollOffset - childScrollOffset(firstChild!)!);
-    // }
     final double paintExtent = constraints.remainingPaintExtent;
-    // final double targetEndScrollOffsetForPaint = constraints.scrollOffset + constraints.remainingPaintExtent;
     log("estimatedMaxScrollOffset:$estimatedMaxScrollOffset");
     geometry = SliverGeometry(
       scrollExtent: estimatedMaxScrollOffset,
       paintExtent: paintExtent,
       cacheExtent: paintExtent,
       maxPaintExtent: estimatedMaxScrollOffset,
-      // Conservative to avoid flickering away the clip during scroll.
-      hasVisualOverflow: true,
     );
 
-    // We may have started the layout while scrolled to the end, which would not
-    // expose a new child.
-    // if (estimatedMaxScrollOffset == endScrollOffset) {
-    //   childManager.setDidUnderflow(true);
-    // }
     childManager.setDidUnderflow(true);
     childManager.didFinishLayout();
   }

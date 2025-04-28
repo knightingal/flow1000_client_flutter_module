@@ -55,17 +55,12 @@ class AlbumIndexState extends State<AlbumIndexPage> {
         double coverWidth = width / length - coverPadding;
         double coverHeight =
             albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
-        // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
 
         albumInfo.frameWidth = width / length;
         albumInfo.frameHeight = albumInfo.realHeight + coverPadding;
 
-        // int slotIndex = minSlot(slot);
-        // Slot slotOne = slot[slotIndex];
-        // slotOne.slotItemList.add(SlotItem(i, albumInfo.frameHeight));
-        // slotOne.totalHeight = slotOne.totalHeight + albumInfo.frameHeight;
         slotGroup.insertSlotItem(SlotItem(i, albumInfo.frameHeight));
       }
       setState(() {
