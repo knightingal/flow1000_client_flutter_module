@@ -14,9 +14,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
-import com.example.flow1000_admin.Tasks.ConcurrencyApkTask
-import com.example.flow1000_admin.Tasks.ConcurrencyJsonApiTask
 import com.example.flow1000_admin.bean.ApkConfig
+import com.example.flow1000_admin.tasks.ConcurrencyApkTask
+import com.example.flow1000_admin.tasks.ConcurrencyJsonApiTask
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.coroutines.MainScope

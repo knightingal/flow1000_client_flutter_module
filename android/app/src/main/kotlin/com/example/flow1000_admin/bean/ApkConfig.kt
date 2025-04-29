@@ -1,4 +1,4 @@
-package com.example.mp4_viewer_client.bean
+package com.example.flow1000_admin.bean
 
 import com.google.gson.annotations.SerializedName
 

@@ -128,4 +128,9 @@ task("releaseUpload") {
         println("${response.code.toString()}  ${response.body.string()}")
     }
 }
+dependencies {
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation( "com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
+}
 
