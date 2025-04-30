@@ -2,6 +2,7 @@ import 'package:flow1000_admin/album_content.dart';
 import 'package:flow1000_admin/album_grid.dart';
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'struct/slot.dart';
 
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final String title;
+  static const platform = MethodChannel('flutter/startWeb');
 
   const MyHomePage({super.key, required this.title});
 
@@ -91,7 +93,9 @@ class MyHomePage extends StatelessWidget {
         // body: EncriptImageWidget(),
         // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => {},
+          onPressed: () {
+            platform.invokeMethod("aboutPage");
+          },
           tooltip: 'Increment',
           child: const Icon(Icons.add),
         ), // This trailing comma makes auto-formatting nicer for build methods.
