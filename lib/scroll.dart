@@ -232,33 +232,26 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
             .toList();
       }
 
-      firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
       List<int> shouldInsertSlotIndexs = calShouldInsertSlotIndexs(firstIndex!);
-      if (shouldInsertSlotIndexs.isNotEmpty) {
-        while (true) {
-          RenderBox? child = insertAndLayoutLeadingChild(
-            childConstraints,
-            parentUsesSize: true,
-          );
-          if (child == null) {
-            break;
-          }
-          childParentData =
-              child.parentData! as _RenderSliverWaterFallParentData;
-          SlotItem slotItem = slots.slotItemList[childParentData.index!];
-          childParentData.layoutOffset = slotItem.scrollOffset;
-          childParentData.crossOffSet =
-              slotItem.slotIndex * tmpConstraints.minWidth / slots.slots.length;
-          if (slotItem.scrollOffset < scrollOffset &&
-              shouldInsertSlotIndexs.contains(slotItem.slotIndex)) {
-            shouldInsertSlotIndexs.remove(slotItem.slotIndex);
-          }
-          if (shouldInsertSlotIndexs.isEmpty) {
-            firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
-            break;
-          }
+      while (shouldInsertSlotIndexs.isNotEmpty) {
+        RenderBox? child = insertAndLayoutLeadingChild(
+          childConstraints,
+          parentUsesSize: true,
+        );
+        if (child == null) {
+          break;
+        }
+        childParentData = child.parentData! as _RenderSliverWaterFallParentData;
+        SlotItem slotItem = slots.slotItemList[childParentData.index!];
+        childParentData.layoutOffset = slotItem.scrollOffset;
+        childParentData.crossOffSet =
+            slotItem.slotIndex * tmpConstraints.minWidth / slots.slots.length;
+        if (slotItem.scrollOffset < scrollOffset &&
+            shouldInsertSlotIndexs.contains(slotItem.slotIndex)) {
+          shouldInsertSlotIndexs.remove(slotItem.slotIndex);
         }
       }
+      firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
     }
 
     RenderBox? child;
