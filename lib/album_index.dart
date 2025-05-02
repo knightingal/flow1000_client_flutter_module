@@ -76,7 +76,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
     if (albumInfoList.isEmpty) {
       body = Text("AlbumIndexPage");
     } else {
-      body = CustomScrollViewExample(
+      body = CustomScrollViewWrap(
         slots: slotGroup,
         builder: (BuildContext context, int index) {
           return GestureDetector(

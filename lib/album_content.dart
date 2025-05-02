@@ -83,7 +83,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(albumInfoList!.dirName),
       );
-      body = CustomScrollViewExample(
+      body = CustomScrollViewWrap(
         slots: slotGroup,
         builder: (BuildContext context, int index) {
           return Image.network(

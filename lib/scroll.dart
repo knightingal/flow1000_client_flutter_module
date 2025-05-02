@@ -40,8 +40,8 @@ class CustomScrollViewExampleApp extends StatelessWidget {
   }
 }
 
-class CustomScrollViewExample extends StatelessWidget {
-  const CustomScrollViewExample({
+class CustomScrollViewWrap extends StatelessWidget {
+  const CustomScrollViewWrap({
     super.key,
     required this.slots,
     required this.builder,
