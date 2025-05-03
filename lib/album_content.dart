@@ -82,6 +82,15 @@ class AlbumContentPageState extends State<AlbumContentPage> {
       appBar = AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(albumInfoList!.dirName),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.menu),
+            tooltip: 'Open shopping cart',
+            onPressed: () {
+              // handle the press
+            },
+          ),
+        ],
       );
       body = CustomScrollViewWrap(
         slots: slotGroup,
