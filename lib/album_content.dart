@@ -83,11 +83,16 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(albumInfoList!.dirName),
         actions: <Widget>[
-          IconButton(
+          PopupMenuButton(
             icon: const Icon(Icons.menu),
             tooltip: 'Open shopping cart',
-            onPressed: () {
-              // handle the press
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuEntry<GridItemMenuItem>>[
+                const PopupMenuItem<GridItemMenuItem>(
+                  value: GridItemMenuItem.good,
+                  child: Text('Good'),
+                ),
+              ];
             },
           ),
         ],
@@ -108,3 +113,5 @@ class AlbumContentPageState extends State<AlbumContentPage> {
     return Scaffold(body: body, appBar: appBar);
   }
 }
+
+enum GridItemMenuItem { none, good, normal, bad, tag }
