@@ -87,9 +87,9 @@ class AlbumContentPageState extends State<AlbumContentPage> {
             icon: const Icon(Icons.menu),
             tooltip: 'Open shopping cart',
             itemBuilder: (BuildContext context) {
-              return <PopupMenuEntry<GridItemMenuItem>>[
-                const PopupMenuItem<GridItemMenuItem>(
-                  value: GridItemMenuItem.good,
+              return <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                  value: 'detail',
                   child: Text('Good'),
                 ),
               ];
@@ -113,5 +113,3 @@ class AlbumContentPageState extends State<AlbumContentPage> {
     return Scaffold(body: body, appBar: appBar);
   }
 }
-
-enum GridItemMenuItem { none, good, normal, bad, tag }
