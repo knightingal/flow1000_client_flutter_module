@@ -35,7 +35,6 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   }
 
   SectionDetail? albumInfoList;
-  // List<Slot> slot = [Slot()];
   SlotGroup slotGroup = SlotGroup.fromCount(1);
 
   @override
@@ -54,14 +53,8 @@ class AlbumContentPageState extends State<AlbumContentPage> {
           coverHeight = albumInfo.height * (coverWidth / albumInfo.width);
         }
 
-        // log("coverHeight:$coverHeight, coverWidth:$coverWidth");
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
-
-        // int slotIndex = minSlot(slot);
-        // Slot slotOne = slot[slotIndex];
-        // slotOne.slotItemList.add(SlotItem(i, coverHeight));
-        // slotOne.totalHeight = slotOne.totalHeight + coverHeight;
 
         slotGroup.insertSlotItem(SlotItem(i, albumInfo.realHeight));
       }
