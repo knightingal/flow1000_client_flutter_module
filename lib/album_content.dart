@@ -79,11 +79,23 @@ class AlbumContentPageState extends State<AlbumContentPage> {
           PopupMenuButton(
             icon: const Icon(Icons.menu),
             tooltip: 'Open shopping cart',
+            onSelected: (String item) {
+              switch (item) {
+                case 'detail':
+                  // pop up detail dialog
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(child: Text(albumInfoList!.dirName));
+                    },
+                  );
+              }
+            },
             itemBuilder: (BuildContext context) {
               return <PopupMenuEntry<String>>[
                 const PopupMenuItem<String>(
                   value: 'detail',
-                  child: Text('Good'),
+                  child: Text('detail'),
                 ),
               ];
             },
