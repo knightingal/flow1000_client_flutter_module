@@ -232,6 +232,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
             .toList();
       }
 
+      firstIndex = getRenderSliverWaterFallParentData(firstChild!).index;
       List<int> shouldInsertSlotIndexs = calShouldInsertSlotIndexs(firstIndex!);
       while (shouldInsertSlotIndexs.isNotEmpty) {
         RenderBox? child = insertAndLayoutLeadingChild(
