@@ -86,7 +86,12 @@ class AlbumContentPageState extends State<AlbumContentPage> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return Dialog(child: Text(albumInfoList!.dirName));
+                      return Dialog(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(albumInfoList!.dirName),
+                        ),
+                      );
                     },
                   );
               }
