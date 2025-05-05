@@ -6,6 +6,9 @@
         android:label="flow1000_admin"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <activity android:name=".AboutActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
