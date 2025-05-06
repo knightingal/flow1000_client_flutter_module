@@ -47,7 +47,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   void initState() {
     super.initState();
     fetchAlbumIndex().then((albumInfoList) {
-      var length = (width > 1500) ? 8 : 4;
+      var length = (width > 1500) ? 8 : 2;
       slotGroup = SlotGroup.fromCount(length);
       // slot = List.generate(length, (index) => Slot(), growable: false);
       for (int i = 0; i < albumInfoList.length; i++) {
