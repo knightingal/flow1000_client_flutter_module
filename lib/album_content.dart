@@ -64,6 +64,14 @@ class AlbumContentPageState extends State<AlbumContentPage> {
     });
   }
 
+  void subscribeAlbum() async {
+    final url = subscribeAlbumUrl(widget.albumIndex);
+    final response = await http.post(Uri.parse(url));
+    if (response.statusCode != 200) {
+      throw Exception("Failed to subscribe album");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -94,6 +102,10 @@ class AlbumContentPageState extends State<AlbumContentPage> {
                       );
                     },
                   );
+                  break;
+                case 'subscribe':
+                  subscribeAlbum();
+                  break;
               }
             },
             itemBuilder: (BuildContext context) {
