@@ -102,6 +102,10 @@ class AlbumContentPageState extends State<AlbumContentPage> {
                   value: 'detail',
                   child: Text('detail'),
                 ),
+                const PopupMenuItem<String>(
+                  value: 'subscribe',
+                  child: Text('subscribe'),
+                ),
               ];
             },
           ),
