@@ -102,10 +102,8 @@ class AlbumContentPageState extends State<AlbumContentPage> {
                       );
                     },
                   );
-                  break;
                 case 'subscribe':
                   subscribeAlbum();
-                  break;
               }
             },
             itemBuilder: (BuildContext context) {
