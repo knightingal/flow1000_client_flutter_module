@@ -1,10 +1,6 @@
-import 'package:flow1000_admin/album_content.dart';
-import 'package:flow1000_admin/album_grid.dart';
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'struct/slot.dart';
 
 void main() {
   runApp(const MyApp());
