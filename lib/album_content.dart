@@ -84,6 +84,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(albumInfoList!.dirName),
         actions: <Widget>[
+          // TODO: change to menubar
           PopupMenuButton(
             icon: const Icon(Icons.menu),
             tooltip: 'Open shopping cart',
