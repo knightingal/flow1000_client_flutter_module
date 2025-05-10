@@ -105,6 +105,12 @@ class AlbumContentPageState extends State<AlbumContentPage> {
                   );
                 },
               ),
+              MenuItemButton(
+                child: Text('subscribe'),
+                onPressed: () {
+                  subscribeAlbum();
+                },
+              ),
             ],
             builder: (
               BuildContext context,
