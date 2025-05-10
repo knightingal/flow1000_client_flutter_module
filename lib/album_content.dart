@@ -72,6 +72,8 @@ class AlbumContentPageState extends State<AlbumContentPage> {
     }
   }
 
+  final FocusNode _buttonFocusNode = FocusNode(debugLabel: 'Menu Button');
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -84,14 +86,12 @@ class AlbumContentPageState extends State<AlbumContentPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(albumInfoList!.dirName),
         actions: <Widget>[
-          // TODO: change to menubar
-          PopupMenuButton(
-            icon: const Icon(Icons.menu),
-            tooltip: 'Open shopping cart',
-            onSelected: (String item) {
-              switch (item) {
-                case 'detail':
-                  // pop up detail dialog
+          MenuAnchor(
+            childFocusNode: _buttonFocusNode,
+            menuChildren: <Widget>[
+              MenuItemButton(
+                child: Text('detail'),
+                onPressed: () {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -103,23 +103,63 @@ class AlbumContentPageState extends State<AlbumContentPage> {
                       );
                     },
                   );
-                case 'subscribe':
-                  subscribeAlbum();
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: 'detail',
-                  child: Text('detail'),
-                ),
-                const PopupMenuItem<String>(
-                  value: 'subscribe',
-                  child: Text('subscribe'),
-                ),
-              ];
+                },
+              ),
+            ],
+            builder: (
+              BuildContext context,
+              MenuController controller,
+              Widget? child,
+            ) {
+              return IconButton(
+                focusNode: _buttonFocusNode,
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+              );
             },
           ),
+          // TODO: change to menubar
+          // PopupMenuButton(
+          //   icon: const Icon(Icons.menu),
+          //   tooltip: 'Open shopping cart',
+          //   onSelected: (String item) {
+          //     switch (item) {
+          //       case 'detail':
+          //         // pop up detail dialog
+          //         showDialog(
+          //           context: context,
+          //           builder: (BuildContext context) {
+          //             return Dialog(
+          //               child: Padding(
+          //                 padding: const EdgeInsets.all(8.0),
+          //                 child: Text(albumInfoList!.dirName),
+          //               ),
+          //             );
+          //           },
+          //         );
+          //       case 'subscribe':
+          //         subscribeAlbum();
+          //     }
+          //   },
+          // itemBuilder: (BuildContext context) {
+          //   return <PopupMenuEntry<String>>[
+          //     const PopupMenuItem<String>(
+          //       value: 'detail',
+          //       child: Text('detail'),
+          //     ),
+          //     const PopupMenuItem<String>(
+          //       value: 'subscribe',
+          //       child: Text('subscribe'),
+          //     ),
+          //   ];
+          // },
+          // ),
         ],
       );
       body = CustomScrollViewWrap(
