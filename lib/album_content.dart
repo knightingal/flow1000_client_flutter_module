@@ -130,42 +130,6 @@ class AlbumContentPageState extends State<AlbumContentPage> {
               );
             },
           ),
-          // TODO: change to menubar
-          // PopupMenuButton(
-          //   icon: const Icon(Icons.menu),
-          //   tooltip: 'Open shopping cart',
-          //   onSelected: (String item) {
-          //     switch (item) {
-          //       case 'detail':
-          //         // pop up detail dialog
-          //         showDialog(
-          //           context: context,
-          //           builder: (BuildContext context) {
-          //             return Dialog(
-          //               child: Padding(
-          //                 padding: const EdgeInsets.all(8.0),
-          //                 child: Text(albumInfoList!.dirName),
-          //               ),
-          //             );
-          //           },
-          //         );
-          //       case 'subscribe':
-          //         subscribeAlbum();
-          //     }
-          //   },
-          // itemBuilder: (BuildContext context) {
-          //   return <PopupMenuEntry<String>>[
-          //     const PopupMenuItem<String>(
-          //       value: 'detail',
-          //       child: Text('detail'),
-          //     ),
-          //     const PopupMenuItem<String>(
-          //       value: 'subscribe',
-          //       child: Text('subscribe'),
-          //     ),
-          //   ];
-          // },
-          // ),
         ],
       );
       body = CustomScrollViewWrap(
