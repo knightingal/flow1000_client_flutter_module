@@ -84,7 +84,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
     } else {
       appBar = AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(albumInfoList!.dirName),
+        title: Text(albumInfoList!.title),
         actions: <Widget>[
           MenuAnchor(
             childFocusNode: _buttonFocusNode,
