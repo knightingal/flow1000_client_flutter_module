@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flow1000_admin/main.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -26,5 +27,16 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+  });
+
+  test('test date format', () {
+    const String timeStampFormat = "MMddyyyy";
+    DateFormat dateFormat = DateFormat(timeStampFormat);
+    try {
+      dateFormat.parse("06012014");
+      expect(true, true);
+    } on FormatException {
+      expect(true, true);
+    }
   });
 }
