@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 Map<String, String> albumMap = {
   "1000": "source",
   "1803": "1803",
@@ -12,23 +14,41 @@ class SectionDetail {
   final int picPage;
   final List<ImgDetail> pics;
   final String album;
+  final String title;
+  final String timeStampe;
 
   SectionDetail({
     required this.dirName,
     required this.picPage,
     required this.pics,
     required this.album,
+    required this.title,
+    required this.timeStampe,
   });
 
   factory SectionDetail.fromJson(Map<String, dynamic> json) {
+    final String dirName = json["dirName"];
+    final String prefix = dirName.substring(0, timeStampFormat.length);
+    String timeStampe;
+    String title;
+    try {
+      dateFormat.parseStrict(prefix);
+      title = dirName.substring(timeStampFormat.length);
+      timeStampe = prefix;
+    } on FormatException {
+      title = dirName;
+      timeStampe = "";
+    }
     return SectionDetail(
-      dirName: json["dirName"],
+      dirName: dirName,
       picPage: json["picPage"],
       pics:
           (json["pics"] as List<dynamic>)
               .map((e) => ImgDetail.fromJson(e))
               .toList(),
       album: json["album"],
+      title: title,
+      timeStampe: timeStampe,
     );
   }
 }
@@ -55,14 +75,19 @@ class ImgDetail {
   }
 }
 
+const String timeStampFormat = "yyyyMMddHHmmss";
+DateFormat dateFormat = DateFormat(timeStampFormat);
+
 class AlbumInfo {
   final int index;
-  final String name;
+  final String dirName;
   final String cover;
   final int coverWidth;
   final int coverHeight;
   final String album;
   final String clientStatus;
+  final String title;
+  final String timeStampe;
   double realWidth = 0;
   double realHeight = 0;
   double frameWidth = 0;
@@ -70,28 +95,45 @@ class AlbumInfo {
 
   String toCoverUrl() {
     // return "http://192.168.2.12:3002/linux1000/encrypted/$name/$cover";
-    return "http://192.168.2.12:3002/linux1000/${albumMap[album]}/$name/${cover.replaceAll(".bin", "")}";
+    return "http://192.168.2.12:3002/linux1000/${albumMap[album]}/$dirName/${cover.replaceAll(".bin", "")}";
   }
 
   AlbumInfo({
     required this.index,
-    required this.name,
+    required this.dirName,
     required this.cover,
     required this.coverWidth,
     required this.coverHeight,
     required this.album,
     required this.clientStatus,
+    required this.title,
+    required this.timeStampe,
   });
 
   factory AlbumInfo.fromJson(Map<String, dynamic> json) {
+    final String dirName = json["name"];
+    final String prefix = dirName.substring(0, timeStampFormat.length);
+    String timeStampe;
+    String title;
+    try {
+      dateFormat.parseStrict(prefix);
+      title = dirName.substring(timeStampFormat.length);
+      timeStampe = prefix;
+    } on FormatException {
+      title = dirName;
+      timeStampe = "";
+    }
+
     return AlbumInfo(
       index: json["index"],
-      name: json["name"],
+      dirName: dirName,
       cover: json["cover"],
       coverWidth: json["coverWidth"],
       coverHeight: json["coverHeight"],
       album: json["album"],
       clientStatus: json["clientStatus"],
+      title: title,
+      timeStampe: timeStampe,
     );
   }
 }
