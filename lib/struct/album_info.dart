@@ -28,17 +28,6 @@ class SectionDetail {
 
   factory SectionDetail.fromJson(Map<String, dynamic> json) {
     final String dirName = json["dirName"];
-    final String prefix = dirName.substring(0, timeStampFormat.length);
-    String timeStampe;
-    String title;
-    try {
-      dateFormat.parseStrict(prefix);
-      title = dirName.substring(timeStampFormat.length);
-      timeStampe = prefix;
-    } on FormatException {
-      title = dirName;
-      timeStampe = "";
-    }
     return SectionDetail(
       dirName: dirName,
       picPage: json["picPage"],
@@ -47,8 +36,8 @@ class SectionDetail {
               .map((e) => ImgDetail.fromJson(e))
               .toList(),
       album: json["album"],
-      title: title,
-      timeStampe: timeStampe,
+      title: json["title"],
+      timeStampe: json["mtime"],
     );
   }
 }
@@ -112,17 +101,6 @@ class AlbumInfo {
 
   factory AlbumInfo.fromJson(Map<String, dynamic> json) {
     final String dirName = json["name"];
-    final String prefix = dirName.substring(0, timeStampFormat.length);
-    String timeStampe;
-    String title;
-    try {
-      dateFormat.parseStrict(prefix);
-      title = dirName.substring(timeStampFormat.length);
-      timeStampe = prefix;
-    } on FormatException {
-      title = dirName;
-      timeStampe = "";
-    }
 
     return AlbumInfo(
       index: json["index"],
@@ -132,8 +110,8 @@ class AlbumInfo {
       coverHeight: json["coverHeight"],
       album: json["album"],
       clientStatus: json["clientStatus"],
-      title: title,
-      timeStampe: timeStampe,
+      title: json["title"],
+      timeStampe: json["mtime"],
     );
   }
 }
