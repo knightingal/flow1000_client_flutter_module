@@ -41,6 +41,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   // late List<Slot> slot;
 
   final int coverPadding = 8;
+  final int titleHeight = 32;
   late SlotGroup slotGroup;
 
   @override
@@ -52,14 +53,19 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       // slot = List.generate(length, (index) => Slot(), growable: false);
       for (int i = 0; i < albumInfoList.length; i++) {
         AlbumInfo albumInfo = albumInfoList[i];
+        double imageWidth = width / length;
+        double imageHeight =
+            albumInfo.coverHeight * (imageWidth / albumInfo.coverWidth);
+
+        albumInfo.frameWidth = imageWidth;
+        albumInfo.frameHeight = imageHeight + titleHeight;
+
         double coverWidth = width / length - coverPadding;
         double coverHeight =
             albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
+
         albumInfo.realHeight = coverHeight;
         albumInfo.realWidth = coverWidth;
-
-        albumInfo.frameWidth = width / length;
-        albumInfo.frameHeight = albumInfo.realHeight + coverPadding;
 
         slotGroup.insertSlotItem(SlotItem(i, albumInfo.frameHeight));
       }
@@ -92,16 +98,18 @@ class AlbumIndexState extends State<AlbumIndexPage> {
               );
             },
             child: Container(
+              height: albumInfoList[index].frameHeight,
+              width: albumInfoList[index].frameWidth,
               padding: EdgeInsets.all(coverPadding.toDouble() / 2),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: Image.network(
-                  key: Key("image-$index"),
-                  albumInfoList[index].toCoverUrl(),
-                  width: albumInfoList[index].realWidth,
-                  height: albumInfoList[index].realHeight,
-                ),
+              // child: ClipRRect(
+              //   borderRadius: BorderRadius.circular(12.0),
+              child: Image.network(
+                key: Key("image-$index"),
+                albumInfoList[index].toCoverUrl(),
+                width: albumInfoList[index].realWidth,
+                height: albumInfoList[index].realHeight,
               ),
+              // ),
             ),
           );
         },
