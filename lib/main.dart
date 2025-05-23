@@ -1,4 +1,5 @@
 import 'package:flow1000_admin/album_index.dart';
+import 'package:flow1000_admin/single_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -59,7 +60,7 @@ class MyHomePage extends StatelessWidget {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return DefaultTabController(
-      length: 6,
+      length: 7,
       child: Scaffold(
         appBar: AppBar(
           // TRY THIS: Try changing the color here to a specific color (to
@@ -71,6 +72,7 @@ class MyHomePage extends StatelessWidget {
           title: Text(title),
           bottom: const TabBar(
             tabs: [
+              Tab(text: "single"),
               Tab(text: "main"),
               Tab(text: "1803"),
               Tab(text: "1804"),
@@ -80,9 +82,10 @@ class MyHomePage extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            AlbumIndexPage(album: "1000"),
+            SinglePage(),
+            AlbumIndexPage(album: "ship"),
             AlbumIndexPage(album: "1803"),
             AlbumIndexPage(album: "1804"),
             AlbumIndexPage(album: "1805"),
