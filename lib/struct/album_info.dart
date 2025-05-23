@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 
 Map<String, String> albumMap = {
   "1000": "source",
+  "ship": "source",
   "1803": "1803",
   "1804": "1804",
   "1805": "1805",
