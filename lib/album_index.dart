@@ -40,7 +40,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   List<AlbumInfo> albumInfoList = [];
   // late List<Slot> slot;
 
-  final int coverPadding = 30;
+  final int coverPadding = 8;
   final int titleHeight = 32;
   late SlotGroup slotGroup;
 
@@ -53,19 +53,28 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       // slot = List.generate(length, (index) => Slot(), growable: false);
       for (int i = 0; i < albumInfoList.length; i++) {
         AlbumInfo albumInfo = albumInfoList[i];
-        double imageWidth = width / length;
-        double imageHeight =
-            albumInfo.coverHeight * (imageWidth / albumInfo.coverWidth);
+        int originImgWidth = albumInfo.coverWidth;
+        int originImgHeight = albumInfo.coverHeight;
 
-        albumInfo.frameWidth = imageWidth;
-        albumInfo.frameHeight = imageHeight + titleHeight;
+        double frameWidth = width / length;
 
-        double coverWidth = width / length - coverPadding;
-        double coverHeight =
-            albumInfo.coverHeight * (coverWidth / albumInfo.coverWidth);
+        double coverImgWidth = frameWidth - coverPadding;
+        double coverImgHeight =
+            coverImgWidth / originImgWidth * originImgHeight;
 
-        albumInfo.realHeight = coverHeight;
-        albumInfo.realWidth = coverWidth;
+        double cardHeight = coverImgHeight + titleHeight;
+        double cardWidth = coverImgWidth;
+
+        double frameHeight = cardHeight + coverPadding;
+
+        albumInfo.frameWidth = frameWidth;
+        albumInfo.frameHeight = frameHeight;
+
+        albumInfo.cardHeight = cardHeight;
+        albumInfo.cardWidth = cardWidth;
+
+        albumInfo.realHeight = coverImgHeight;
+        albumInfo.realWidth = coverImgWidth;
 
         slotGroup.insertSlotItem(SlotItem(i, albumInfo.frameHeight));
       }
@@ -97,22 +106,16 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                 ),
               );
             },
-            child: Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(width: 1, color: Colors.red),
-              // ),
+            child: SizedBox(
               height: albumInfoList[index].frameHeight,
               width: albumInfoList[index].frameWidth,
-              // padding: EdgeInsets.all(coverPadding.toDouble() / 2),
-              // child: ClipRRect(
-              //   borderRadius: BorderRadius.circular(12.0),
               child: Align(
                 alignment: Alignment.center,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.0),
                   child: Container(
-                    width: albumInfoList[index].realWidth,
-                    height: albumInfoList[index].frameHeight - coverPadding,
+                    width: albumInfoList[index].cardWidth,
+                    height: albumInfoList[index].cardHeight,
                     color: Colors.amber,
                     child: Align(
                       alignment: Alignment.topCenter,
@@ -129,7 +132,6 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                   ),
                 ),
               ),
-              // ),
             ),
           );
         },
