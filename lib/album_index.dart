@@ -40,7 +40,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   List<AlbumInfo> albumInfoList = [];
   // late List<Slot> slot;
 
-  final int coverPadding = 8;
+  final int coverPadding = 30;
   final int titleHeight = 32;
   late SlotGroup slotGroup;
 
@@ -98,16 +98,36 @@ class AlbumIndexState extends State<AlbumIndexPage> {
               );
             },
             child: Container(
+              // decoration: BoxDecoration(
+              //   border: Border.all(width: 1, color: Colors.red),
+              // ),
               height: albumInfoList[index].frameHeight,
               width: albumInfoList[index].frameWidth,
-              padding: EdgeInsets.all(coverPadding.toDouble() / 2),
+              // padding: EdgeInsets.all(coverPadding.toDouble() / 2),
               // child: ClipRRect(
               //   borderRadius: BorderRadius.circular(12.0),
-              child: Image.network(
-                key: Key("image-$index"),
-                albumInfoList[index].toCoverUrl(),
-                width: albumInfoList[index].realWidth,
-                height: albumInfoList[index].realHeight,
+              child: Align(
+                alignment: Alignment.center,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: Container(
+                    width: albumInfoList[index].realWidth,
+                    height: albumInfoList[index].frameHeight - coverPadding,
+                    color: Colors.amber,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Image.network(
+                          width: albumInfoList[index].realWidth,
+                          height: albumInfoList[index].realHeight,
+                          key: Key("image-$index"),
+                          albumInfoList[index].toCoverUrl(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               // ),
             ),
