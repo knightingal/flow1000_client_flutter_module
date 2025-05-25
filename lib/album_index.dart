@@ -136,7 +136,10 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                           child: SizedBox(
                             height: titleHeight.toDouble(),
                             child: Center(
-                              child: Text(albumInfoList[index].title),
+                              child: Text(
+                                albumInfoList[index].title,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ),
                         ),
