@@ -117,17 +117,30 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                     width: albumInfoList[index].cardWidth,
                     height: albumInfoList[index].cardHeight,
                     color: Colors.amber,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Image.network(
-                          width: albumInfoList[index].realWidth,
-                          height: albumInfoList[index].realHeight,
-                          key: Key("image-$index"),
-                          albumInfoList[index].toCoverUrl(),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12.0),
+                            child: Image.network(
+                              width: albumInfoList[index].realWidth,
+                              height: albumInfoList[index].realHeight,
+                              key: Key("image-$index"),
+                              albumInfoList[index].toCoverUrl(),
+                            ),
+                          ),
                         ),
-                      ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            height: titleHeight.toDouble(),
+                            child: Center(
+                              child: Text(albumInfoList[index].title),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
