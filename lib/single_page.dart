@@ -1,16 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:flow1000_admin/album_content.dart';
-import 'package:flow1000_admin/scroll.dart';
-import 'package:flow1000_admin/struct/album_info.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import 'config.dart';
-import 'struct/slot.dart';
 
 class SinglePage extends StatelessWidget {
+  const SinglePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
