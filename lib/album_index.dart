@@ -116,7 +116,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                   child: Container(
                     width: albumInfoList[index].cardWidth,
                     height: albumInfoList[index].cardHeight,
-                    color: Colors.amber,
+                    color: Theme.of(context).primaryColor,
                     child: Stack(
                       children: [
                         Align(
