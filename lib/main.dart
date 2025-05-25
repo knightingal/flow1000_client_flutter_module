@@ -60,7 +60,7 @@ class MyHomePage extends StatelessWidget {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return DefaultTabController(
-      length: 7,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           // TRY THIS: Try changing the color here to a specific color (to
@@ -72,7 +72,7 @@ class MyHomePage extends StatelessWidget {
           title: Text(title),
           bottom: const TabBar(
             tabs: [
-              Tab(text: "single"),
+              // Tab(text: "single"),
               Tab(text: "main"),
               Tab(text: "1803"),
               Tab(text: "1804"),
@@ -84,8 +84,8 @@ class MyHomePage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            SinglePage(),
-            AlbumIndexPage(album: "ship"),
+            // SinglePage(),
+            AlbumIndexPage(album: "1000"),
             AlbumIndexPage(album: "1803"),
             AlbumIndexPage(album: "1804"),
             AlbumIndexPage(album: "1805"),
