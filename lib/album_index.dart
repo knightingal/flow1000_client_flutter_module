@@ -138,6 +138,13 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                             child: Center(
                               child: Text(
                                 albumInfoList[index].title,
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context)
+                                          .buttonTheme
+                                          .colorScheme
+                                          ?.onPrimaryContainer,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
