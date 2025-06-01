@@ -90,7 +90,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
             childFocusNode: _buttonFocusNode,
             menuChildren: <Widget>[
               MenuItemButton(
-                child: Text('detail'),
+                child: Text('Detail'),
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -106,7 +106,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
                 },
               ),
               MenuItemButton(
-                child: Text('subscribe'),
+                child: Text('Subscribe'),
                 onPressed: () {
                   subscribeAlbum();
                 },
