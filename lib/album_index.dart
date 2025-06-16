@@ -116,7 +116,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                   child: Container(
                     width: albumInfoList[index].cardWidth,
                     height: albumInfoList[index].cardHeight,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     child: Stack(
                       children: [
                         Align(
@@ -140,10 +140,9 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                                 albumInfoList[index].title,
                                 style: TextStyle(
                                   color:
-                                      Theme.of(context)
-                                          .buttonTheme
-                                          .colorScheme
-                                          ?.onPrimaryContainer,
+                                      Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimaryContainer,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
