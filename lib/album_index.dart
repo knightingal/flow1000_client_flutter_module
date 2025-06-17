@@ -41,7 +41,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   // late List<Slot> slot;
 
   final int coverPadding = 8;
-  final int titleHeight = 32;
+  final int titleHeight = 56;
   late SlotGroup slotGroup;
 
   @override
@@ -133,12 +133,18 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: SizedBox(
+                          child: Container(
                             height: titleHeight.toDouble(),
-                            child: Center(
+                            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
                               child: Text(
                                 albumInfoList[index].title,
                                 style: TextStyle(
+                                  fontSize:
+                                      Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge!.fontSize,
                                   color:
                                       Theme.of(
                                         context,
