@@ -1,4 +1,5 @@
 import 'package:flow1000_admin/album_index.dart';
+import 'package:flow1000_admin/cover_dialog.dart';
 import 'package:flow1000_admin/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -110,7 +111,8 @@ class MyHomePage extends StatelessWidget {
         // body: ImageEx.network("http://192.168.2.12:3002/linux1000/encrypted/20151209003040BB-29 USS NORTH DAKOTA/011739.jpg.bin"),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            platform.invokeMethod("aboutPage");
+            // platform.invokeMethod("aboutPage");
+            popupCoverDialog(context);
           },
           tooltip: 'Increment',
           child: const Icon(Icons.add),
