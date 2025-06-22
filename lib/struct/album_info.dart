@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 Map<String, String> albumMap = {
   "1000": "source",
   "ship": "source",
@@ -64,9 +62,6 @@ class ImgDetail {
     );
   }
 }
-
-const String timeStampFormat = "yyyyMMddHHmmss";
-DateFormat dateFormat = DateFormat(timeStampFormat);
 
 class AlbumInfo {
   final int index;
