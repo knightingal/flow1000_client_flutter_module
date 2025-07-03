@@ -30,13 +30,13 @@ class SectionDetail {
     Map<String, dynamic> json,
     List<Map<String, dynamic>> picJson,
   ) {
-    final String dirName = json["dirName"];
+    final String dirName = json["name"];
     return SectionDetail(
       dirName: dirName,
       // picPage: json["picPage"],
       pics: picJson.map((e) => ImgDetail.fromJson(e)).toList(),
       album: json["album"],
-      title: json["title"],
+      title: json["name"],
       timeStampe: json["mtime"],
     );
   }
