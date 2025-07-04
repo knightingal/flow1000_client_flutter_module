@@ -21,18 +21,18 @@ class AlbumContentPage extends StatefulWidget {
 
 class AlbumContentPageState extends State<AlbumContentPage> {
   late double width;
-  Future<SectionDetail> fetchAlbumIndex() async {
-    final response = await http.get(
-      Uri.parse(albumContentUrl(widget.albumIndex)),
-    );
-    // if (response.statusCode == 200) {
-    //   dynamic jsonArray = jsonDecode(response.body);
-    //   SectionDetail albumInfoList = SectionDetail.fromJson(jsonArray);
-    //   return albumInfoList;
-    // } else {
-    throw Exception("Failed to load album");
-    // }
-  }
+  // Future<SectionDetail> fetchAlbumIndex() async {
+  // final response = await http.get(
+  //   Uri.parse(albumContentUrl(widget.albumIndex)),
+  // );
+  // if (response.statusCode == 200) {
+  //   dynamic jsonArray = jsonDecode(response.body);
+  //   SectionDetail albumInfoList = SectionDetail.fromJson(jsonArray);
+  //   return albumInfoList;
+  // } else {
+  // throw Exception("Failed to load album");
+  // }
+  // }
 
   SectionDetail? albumInfoList;
   SlotGroup slotGroup = SlotGroup.fromCount(1);
@@ -40,28 +40,28 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   @override
   void initState() {
     super.initState();
-    fetchAlbumIndex().then((albumInfoList) {
-      for (int i = 0; i < albumInfoList.pics.length; i++) {
-        ImgDetail albumInfo = albumInfoList.pics[i];
-        double coverHeight;
-        double coverWidth;
-        if (slotGroup.slots.length == 1 && width > albumInfo.width) {
-          coverWidth = albumInfo.width.toDouble();
-          coverHeight = albumInfo.height.toDouble();
-        } else {
-          coverWidth = width / slotGroup.slots.length;
-          coverHeight = albumInfo.height * (coverWidth / albumInfo.width);
-        }
+    // fetchAlbumIndex().then((albumInfoList) {
+    //   for (int i = 0; i < albumInfoList.pics.length; i++) {
+    //     ImgDetail albumInfo = albumInfoList.pics[i];
+    //     double coverHeight;
+    //     double coverWidth;
+    //     if (slotGroup.slots.length == 1 && width > albumInfo.width) {
+    //       coverWidth = albumInfo.width.toDouble();
+    //       coverHeight = albumInfo.height.toDouble();
+    //     } else {
+    //       coverWidth = width / slotGroup.slots.length;
+    //       coverHeight = albumInfo.height * (coverWidth / albumInfo.width);
+    //     }
 
-        albumInfo.realHeight = coverHeight;
-        albumInfo.realWidth = coverWidth;
+    //     albumInfo.realHeight = coverHeight;
+    //     albumInfo.realWidth = coverWidth;
 
-        slotGroup.insertSlotItem(SlotItem(i, albumInfo.realHeight));
-      }
-      setState(() {
-        this.albumInfoList = albumInfoList;
-      });
-    });
+    //     slotGroup.insertSlotItem(SlotItem(i, albumInfo.realHeight));
+    //   }
+    //   setState(() {
+    //     this.albumInfoList = albumInfoList;
+    //   });
+    // });
   }
 
   void subscribeAlbum() async {
