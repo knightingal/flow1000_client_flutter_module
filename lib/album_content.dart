@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:blur/blur.dart';
 import 'package:flow1000_admin/scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -132,17 +133,29 @@ class AlbumContentPageState extends State<AlbumContentPage> {
           ),
         ],
       );
-      body = CustomScrollViewWrap(
-        slots: slotGroup,
-        builder: (BuildContext context, int index) {
-          return Image.network(
-            key: Key("content-$index"),
-            albumInfoList!.pics[index].toUrl(albumInfoList!),
-            width: albumInfoList!.pics[index].realWidth,
-            height: albumInfoList!.pics[index].realHeight,
-          );
-        },
-        totalLength: albumInfoList!.pics.length,
+      body = Stack(
+        children: [
+          CustomScrollViewWrap(
+            slots: slotGroup,
+            builder: (BuildContext context, int index) {
+              return Image.network(
+                key: Key("content-$index"),
+                albumInfoList!.pics[index].toUrl(albumInfoList!),
+                width: albumInfoList!.pics[index].realWidth,
+                height: albumInfoList!.pics[index].realHeight,
+              );
+            },
+            totalLength: albumInfoList!.pics.length,
+          ),
+          Text("blur test", style: TextStyle(color: Colors.black)).frosted(
+            blur: 2.5,
+            frostColor: Colors.white,
+            frostOpacity: 0.5,
+            borderRadius: BorderRadius.circular(10),
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.all(10),
+          ),
+        ],
       );
     }
     return Scaffold(body: body, appBar: appBar);
