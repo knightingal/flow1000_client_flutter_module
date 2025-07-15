@@ -1,7 +1,6 @@
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flow1000_admin/cover_dialog.dart';
 import 'package:flow1000_admin/db.dart';
-import 'package:flow1000_admin/section_content.dart';
 import 'package:flow1000_admin/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -117,13 +116,7 @@ class MyHomePage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // platform.invokeMethod("aboutPage");
-            // popupCoverDialog(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SectionContentPage(albumIndex: 5),
-              ),
-            );
+            popupCoverDialog(context);
           },
           tooltip: 'Increment',
           child: const Icon(Icons.add),
