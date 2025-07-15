@@ -25,13 +25,13 @@ class AlbumContentPageState extends State<AlbumContentPage> {
     final response = await http.get(
       Uri.parse(albumContentUrl(widget.albumIndex)),
     );
-    // if (response.statusCode == 200) {
-    //   dynamic jsonArray = jsonDecode(response.body);
-    //   SectionDetail albumInfoList = SectionDetail.fromJson(jsonArray);
-    //   return albumInfoList;
-    // } else {
-    throw Exception("Failed to load album");
-    // }
+    if (response.statusCode == 200) {
+      dynamic jsonArray = jsonDecode(response.body);
+      SectionDetail albumInfoList = SectionDetail.fromJson(jsonArray);
+      return albumInfoList;
+    } else {
+      throw Exception("Failed to load album");
+    }
   }
 
   SectionDetail? albumInfoList;

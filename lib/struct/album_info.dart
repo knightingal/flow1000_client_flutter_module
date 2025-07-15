@@ -10,31 +10,30 @@ Map<String, String> albumMap = {
 
 class SectionDetail {
   final String dirName;
-  // final int picPage;
+  final int picPage;
   final List<ImgDetail> pics;
   final String album;
   final String title;
   final String timeStampe;
-  late String rootPath;
 
   SectionDetail({
     required this.dirName,
-    // required this.picPage,
+    required this.picPage,
     required this.pics,
     required this.album,
     required this.title,
     required this.timeStampe,
   });
 
-  factory SectionDetail.fromJson(
-    Map<String, dynamic> json,
-    List<Map<String, dynamic>> picJson,
-  ) {
+  factory SectionDetail.fromJson(Map<String, dynamic> json) {
     final String dirName = json["dirName"];
     return SectionDetail(
       dirName: dirName,
-      // picPage: json["picPage"],
-      pics: picJson.map((e) => ImgDetail.fromJson(e)).toList(),
+      picPage: json["picPage"],
+      pics:
+          (json["pics"] as List<dynamic>)
+              .map((e) => ImgDetail.fromJson(e))
+              .toList(),
       album: json["album"],
       title: json["title"],
       timeStampe: json["mtime"],
@@ -49,8 +48,9 @@ class ImgDetail {
   double realHeight = 0;
   double realWidth = 0;
 
-  String toUrl(SectionDetail sectionDetail) =>
-      "${sectionDetail.rootPath}/${sectionDetail.dirName}/$name";
+  String toUrl(SectionDetail sectionDetail) {
+    return "http://192.168.2.12:3002/linux1000/${albumMap[sectionDetail.album]}/${sectionDetail.dirName}/${name.replaceAll(".bin", "")}";
+  }
 
   ImgDetail({required this.name, required this.width, required this.height});
 

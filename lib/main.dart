@@ -1,14 +1,10 @@
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flow1000_admin/cover_dialog.dart';
-import 'package:flow1000_admin/db.dart';
 import 'package:flow1000_admin/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-final DB db = DB();
-
 void main() {
-  db.init();
   runApp(const MyApp());
 }
 
