@@ -10,7 +10,9 @@ class SlotItem {
 
 class Slot {
   final List<SlotItem> slotItemList = [];
-  double totalHeight = 0;
+  double totalHeight;
+
+  Slot(double headerHeight) : totalHeight = headerHeight;
 
   SlotItem itemByIndex(int index) {
     return slotItemList.firstWhere((item) {
@@ -24,8 +26,10 @@ class Slot {
 }
 
 class SlotGroup {
-  factory SlotGroup.fromCount(int slotCount) {
-    return SlotGroup(List.generate(slotCount, (_) => Slot(), growable: false));
+  factory SlotGroup.fromCount(int slotCount, double headerHeight) {
+    return SlotGroup(
+      List.generate(slotCount, (_) => Slot(headerHeight), growable: false),
+    );
   }
 
   final List<SlotItem> slotItemList = [];

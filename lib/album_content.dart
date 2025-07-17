@@ -36,7 +36,7 @@ class AlbumContentPageState extends State<AlbumContentPage> {
   }
 
   SectionDetail? albumInfoList;
-  SlotGroup slotGroup = SlotGroup.fromCount(1);
+  SlotGroup slotGroup = SlotGroup.fromCount(1, 0);
 
   @override
   void initState() {
