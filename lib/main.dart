@@ -1,11 +1,17 @@
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flow1000_admin/cover_dialog.dart';
+import 'package:flow1000_admin/scroll.dart';
 import 'package:flow1000_admin/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  if (true) {
+    runApp(const MyApp());
+    // ignore: dead_code
+  } else {
+    runApp(CustomScrollViewExampleApp());
+  }
 }
 
 class MyApp extends StatelessWidget {
