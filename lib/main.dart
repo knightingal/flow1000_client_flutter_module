@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  if (true) {
+  if (false) {
     runApp(const MyApp());
     // ignore: dead_code
   } else {
