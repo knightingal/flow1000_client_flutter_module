@@ -15,28 +15,37 @@ final List<Color> colorPiker = [
 class CustomScrollViewExampleApp extends StatelessWidget {
   CustomScrollViewExampleApp({super.key});
 
-  final int totalLength = 200;
+  final int totalLength = 1000;
 
-  final List<Slot> slot = [
-    Slot(),
-    Slot(),
-    Slot(),
-    Slot(),
-    Slot(),
-    Slot(),
-    Slot(),
-    Slot(),
-  ];
+  final List<Slot> slot = [Slot(), Slot(), Slot(), Slot()];
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    SlotGroup slots = SlotGroup.fromCount(slot.length);
     for (int i = 0; i < totalLength; i++) {
-      int slotIndex = minSlot(slot);
-      Slot slotOne = slot[slotIndex];
-      slotOne.slotItemList.add(SlotItem(i, 100 + i % 4 * 20.0));
-      slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
+      slots.insertSlotItem(SlotItem(i, 100 + i % 4 * 20.0));
     }
-    return MaterialApp();
+    return MaterialApp(
+      home: CustomScrollViewWrap(
+        slots: slots,
+        builder: (BuildContext context, int index) {
+          // SlotItem slotItem = slots.slotItemList[index];
+          return Container(
+            height: 100 + index % 4 * 20.0,
+            width: width / slot.length,
+            color: colorPiker[index % colorPiker.length],
+            child: Center(
+              child: Text(
+                "Index: $index",
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          );
+        },
+        totalLength: totalLength,
+      ),
+    );
   }
 }
 
