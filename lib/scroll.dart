@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -27,23 +28,31 @@ class CustomScrollViewExampleApp extends StatelessWidget {
       slots.insertSlotItem(SlotItem(i, 100 + i % 4 * 20.0));
     }
     return MaterialApp(
-      home: CustomScrollViewWrap(
-        slots: slots,
-        builder: (BuildContext context, int index) {
-          // SlotItem slotItem = slots.slotItemList[index];
-          return Container(
-            height: 100 + index % 4 * 20.0,
-            width: width / 4,
-            color: colorPiker[index % colorPiker.length],
-            child: Center(
-              child: Text(
-                "Index: $index",
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          );
-        },
-        totalLength: totalLength,
+      home: Stack(
+        children: [
+          CustomScrollViewWrap(
+            slots: slots,
+            builder: (BuildContext context, int index) {
+              // SlotItem slotItem = slots.slotItemList[index];
+              return Container(
+                height: 100 + index % 4 * 20.0,
+                width: width / 4,
+                color: colorPiker[index % colorPiker.length],
+                child: Center(
+                  child: Text(
+                    "Index: $index",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              );
+            },
+            totalLength: totalLength,
+          ),
+          SizedBox(height: headerHeight, width: width).frosted(
+            blur: 10,
+            // frostColor: Theme.of(context).colorScheme.primary,
+          ),
+        ],
       ),
     );
   }
