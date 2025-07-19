@@ -314,11 +314,14 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
 
     double estimatedMaxScrollOffset = slots.totalHeight();
     final double paintExtent = constraints.remainingPaintExtent;
+    final double cacheExtent = constraints.remainingCacheExtent;
     log("estimatedMaxScrollOffset:$estimatedMaxScrollOffset");
+    log("paintExtent:$paintExtent");
+    log("cacheExtent:$cacheExtent");
     geometry = SliverGeometry(
       scrollExtent: estimatedMaxScrollOffset,
       paintExtent: paintExtent,
-      cacheExtent: paintExtent,
+      cacheExtent: cacheExtent,
       maxPaintExtent: estimatedMaxScrollOffset,
     );
 

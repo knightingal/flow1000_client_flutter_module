@@ -1,5 +1,6 @@
 import 'package:flow1000_admin/album_index.dart';
 import 'package:flow1000_admin/cover_dialog.dart';
+import 'package:flow1000_admin/float_list.dart';
 import 'package:flow1000_admin/scroll.dart';
 import 'package:flow1000_admin/theme.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +8,11 @@ import 'package:flutter/services.dart';
 
 void main() {
   // ignore: dead_code
-  if (true) {
+  if (false) {
     runApp(const MyApp());
     // ignore: dead_code
   } else {
+    // runApp(FloadApp());
     runApp(CustomScrollViewExampleApp());
   }
 }
