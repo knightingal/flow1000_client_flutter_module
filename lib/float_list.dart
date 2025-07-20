@@ -19,9 +19,9 @@ class FloadApp extends StatelessWidget {
               // Pin the app bar when scrolling.
               pinned: true,
               // Display a placeholder widget to visualize the shrinking size.
-              flexibleSpace: Placeholder(),
+              // flexibleSpace: Placeholder(),
               // Make the initial height of the SliverAppBar larger than normal.
-              expandedHeight: 200,
+              // expandedHeight: 200,
             ),
             SliverList.builder(
               // The builder function returns a ListTile with a title that

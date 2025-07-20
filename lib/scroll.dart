@@ -15,6 +15,45 @@ final List<Color> colorPiker = [
 
 final double headerHeight = 60.0;
 
+// For testing cache purposes, you can comment out the CustomScrollViewTopPaddingExampleApp
+class CustomScrollViewTopPaddingExampleApp extends StatelessWidget {
+  const CustomScrollViewTopPaddingExampleApp({super.key});
+
+  final int totalLength = 200;
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    SlotGroup slots = SlotGroup.fromCount(4, headerHeight);
+    for (int i = 0; i < totalLength; i++) {
+      slots.insertSlotItem(SlotItem(i, 100 + i % 4 * 20.0));
+    }
+    return MaterialApp(
+      home: Container(
+        padding: EdgeInsets.fromLTRB(0, 150, 0, 0),
+        child: CustomScrollViewWrap(
+          slots: slots,
+          builder: (BuildContext context, int index) {
+            // SlotItem slotItem = slots.slotItemList[index];
+            return Container(
+              height: 100 + index % 4 * 20.0,
+              width: width / 4,
+              color: colorPiker[index % colorPiker.length],
+              child: Center(
+                child: Text(
+                  "Index: $index",
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            );
+          },
+          totalLength: totalLength,
+        ),
+      ),
+    );
+  }
+}
+
 class CustomScrollViewExampleApp extends StatelessWidget {
   CustomScrollViewExampleApp({super.key});
 
