@@ -13,7 +13,7 @@ final List<Color> colorPiker = [
   Colors.yellow,
 ];
 
-final double headerHeight = 60.0;
+final double headerHeight = 00.0;
 
 // For testing cache purposes, you can comment out the CustomScrollViewTopPaddingExampleApp
 class CustomScrollViewTopPaddingExampleApp extends StatelessWidget {
@@ -113,15 +113,27 @@ class CustomScrollViewWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Key centerKey = ValueKey<String>('bottom-sliver-list');
+    // const Key centerKey = ValueKey<String>('bottom-sliver-list');
 
     return Scaffold(
       body: CustomScrollView(
-        center: centerKey,
+        // center: centerKey,
         slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 60.0,
+            collapsedHeight: 60.0,
+            toolbarHeight: 60.0,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            floating: true,
+            pinned: true,
+            flexibleSpace: SizedBox.expand().blurred(blur: 10.0),
+          ),
           SliverWaterFall(
             slots,
-            key: centerKey,
+            // key: centerKey,
             delegate: SliverChildBuilderDelegate(
               builder,
               childCount: totalLength,
