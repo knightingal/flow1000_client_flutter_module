@@ -120,16 +120,40 @@ class CustomScrollViewWrap extends StatelessWidget {
         // center: centerKey,
         slivers: <Widget>[
           SliverAppBar(
+            // title: const Text("CustomScrollView"),
             expandedHeight: 60.0,
             collapsedHeight: 60.0,
             toolbarHeight: 60.0,
             backgroundColor: Colors.transparent,
-            foregroundColor: Colors.transparent,
+            // foregroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
-            shadowColor: Colors.transparent,
+            shadowColor: Theme.of(context).colorScheme.shadow,
             floating: true,
             pinned: true,
-            flexibleSpace: SizedBox.expand().blurred(blur: 10.0),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 1.0,
+                  ),
+                ),
+              ),
+              child: SizedBox.expand(
+                child: Center(
+                  child: Text(
+                    "CustomScrollView",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ).frosted(
+                blur: 100.0,
+                frostColor: Theme.of(context).colorScheme.primary,
+              ),
+            ),
           ),
           SliverWaterFall(
             slots,
