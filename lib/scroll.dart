@@ -121,9 +121,9 @@ class CustomScrollViewWrap extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
             // title: const Text("CustomScrollView"),
-            expandedHeight: 60.0,
-            collapsedHeight: 60.0,
-            toolbarHeight: 60.0,
+            expandedHeight: kToolbarHeight,
+            collapsedHeight: kToolbarHeight,
+            toolbarHeight: kToolbarHeight,
             backgroundColor: Colors.transparent,
             // foregroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
@@ -134,8 +134,8 @@ class CustomScrollViewWrap extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 1.0,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    width: Theme.of(context).tabBarTheme.dividerHeight ?? 1.0,
                   ),
                 ),
               ),
