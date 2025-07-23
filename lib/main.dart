@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 
 void main() {
   // ignore: dead_code
-  if (false) {
+  if (true) {
     runApp(const MyApp());
     // ignore: dead_code
   } else {
