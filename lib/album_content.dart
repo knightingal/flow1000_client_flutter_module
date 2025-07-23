@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:blur/blur.dart';
 import 'package:flow1000_admin/scroll.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_avif/flutter_avif.dart';
 import 'package:http/http.dart' as http;
 
 import 'config.dart';
@@ -138,12 +139,22 @@ class AlbumContentPageState extends State<AlbumContentPage> {
           CustomScrollViewWrap(
             slots: slotGroup,
             builder: (BuildContext context, int index) {
-              return Image.network(
-                key: Key("content-$index"),
-                albumInfoList!.pics[index].toUrl(albumInfoList!),
-                width: albumInfoList!.pics[index].realWidth,
-                height: albumInfoList!.pics[index].realHeight,
-              );
+              var url = albumInfoList!.pics[index].toUrl(albumInfoList!);
+              if (url.endsWith(".avif")) {
+                return AvifImage.network(
+                  key: Key("content-$index"),
+                  url,
+                  width: albumInfoList!.pics[index].realWidth,
+                  height: albumInfoList!.pics[index].realHeight,
+                );
+              } else {
+                return Image.network(
+                  key: Key("content-$index"),
+                  url,
+                  width: albumInfoList!.pics[index].realWidth,
+                  height: albumInfoList!.pics[index].realHeight,
+                );
+              }
             },
             totalLength: albumInfoList!.pics.length,
           ),
