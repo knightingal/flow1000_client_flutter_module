@@ -134,39 +134,27 @@ class AlbumContentPageState extends State<AlbumContentPage> {
           ),
         ],
       );
-      body = Stack(
-        children: [
-          CustomScrollViewWrap(
-            slots: slotGroup,
-            builder: (BuildContext context, int index) {
-              var url = albumInfoList!.pics[index].toUrl(albumInfoList!);
-              if (url.endsWith(".avif")) {
-                return AvifImage.network(
-                  key: Key("content-$index"),
-                  url,
-                  width: albumInfoList!.pics[index].realWidth,
-                  height: albumInfoList!.pics[index].realHeight,
-                );
-              } else {
-                return Image.network(
-                  key: Key("content-$index"),
-                  url,
-                  width: albumInfoList!.pics[index].realWidth,
-                  height: albumInfoList!.pics[index].realHeight,
-                );
-              }
-            },
-            totalLength: albumInfoList!.pics.length,
-          ),
-          Text("blur test", style: TextStyle(color: Colors.black)).frosted(
-            blur: 2.5,
-            frostColor: Colors.white,
-            frostOpacity: 0.5,
-            borderRadius: BorderRadius.circular(10),
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(10),
-          ),
-        ],
+      body = CustomScrollViewWrap(
+        slots: slotGroup,
+        builder: (BuildContext context, int index) {
+          var url = albumInfoList!.pics[index].toUrl(albumInfoList!);
+          if (url.endsWith(".avif")) {
+            return AvifImage.network(
+              key: Key("content-$index"),
+              url,
+              width: albumInfoList!.pics[index].realWidth,
+              height: albumInfoList!.pics[index].realHeight,
+            );
+          } else {
+            return Image.network(
+              key: Key("content-$index"),
+              url,
+              width: albumInfoList!.pics[index].realWidth,
+              height: albumInfoList!.pics[index].realHeight,
+            );
+          }
+        },
+        totalLength: albumInfoList!.pics.length,
       );
     }
     return Scaffold(body: body, appBar: appBar);
