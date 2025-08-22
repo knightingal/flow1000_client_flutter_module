@@ -201,6 +201,8 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
 
   final SlotGroup slots;
 
+  final bool showBaseline = false;
+
   @override
   void setupParentData(covariant RenderObject child) {
     if (child.parentData is! _RenderSliverWaterFallParentData) {
@@ -415,6 +417,9 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    if (!showBaseline) {
+      return;
+    }
     super.paint(context, offset);
     Offset p1 = Offset(offset.dx, offset.dy + padding);
     Offset p2 = Offset(
