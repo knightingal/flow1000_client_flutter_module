@@ -187,7 +187,11 @@ class SliverWaterFall extends SliverMultiBoxAdaptorWidget {
   RenderSliverMultiBoxAdaptor createRenderObject(BuildContext context) {
     final SliverMultiBoxAdaptorElement element =
         context as SliverMultiBoxAdaptorElement;
-    return RenderSliverWaterFall(slots, childManager: element);
+    return RenderSliverWaterFall(
+      slots,
+      childManager: element,
+      showBaseline: false,
+    );
   }
 }
 
@@ -197,11 +201,15 @@ class _RenderSliverWaterFallParentData extends SliverMultiBoxAdaptorParentData {
 }
 
 class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
-  RenderSliverWaterFall(this.slots, {required super.childManager});
+  RenderSliverWaterFall(
+    this.slots, {
+    required super.childManager,
+    this.showBaseline = false,
+  });
 
   final SlotGroup slots;
 
-  final bool showBaseline = false;
+  bool showBaseline;
 
   @override
   void setupParentData(covariant RenderObject child) {
