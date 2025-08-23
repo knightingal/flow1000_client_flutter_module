@@ -55,7 +55,7 @@ class CustomScrollViewTopPaddingExampleApp extends StatelessWidget {
 }
 
 class CustomScrollViewExampleApp extends StatelessWidget {
-  CustomScrollViewExampleApp({super.key});
+  const CustomScrollViewExampleApp({super.key});
 
   final int totalLength = 1000;
 
@@ -71,6 +71,7 @@ class CustomScrollViewExampleApp extends StatelessWidget {
         children: [
           CustomScrollViewWrap(
             withTitle: true,
+            showBaseline: true,
             slots: slots,
             builder: (BuildContext context, int index) {
               // SlotItem slotItem = slots.slotItemList[index];
@@ -105,6 +106,7 @@ class CustomScrollViewWrap extends StatelessWidget {
     required this.builder,
     required this.totalLength,
     this.withTitle = false,
+    this.showBaseline = false,
   });
 
   final SlotGroup slots;
@@ -114,6 +116,8 @@ class CustomScrollViewWrap extends StatelessWidget {
   final int totalLength;
 
   final bool withTitle;
+
+  final bool showBaseline;
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +183,14 @@ class CustomScrollViewWrap extends StatelessWidget {
 }
 
 class SliverWaterFall extends SliverMultiBoxAdaptorWidget {
-  const SliverWaterFall(this.slots, {super.key, required super.delegate});
+  const SliverWaterFall(
+    this.slots, {
+    super.key,
+    required super.delegate,
+    this.showBaseline = false,
+  });
+
+  final bool showBaseline;
 
   final SlotGroup slots;
 
@@ -190,7 +201,7 @@ class SliverWaterFall extends SliverMultiBoxAdaptorWidget {
     return RenderSliverWaterFall(
       slots,
       childManager: element,
-      showBaseline: false,
+      showBaseline: showBaseline,
     );
   }
 }
