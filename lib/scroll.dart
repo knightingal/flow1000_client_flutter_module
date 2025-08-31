@@ -436,10 +436,10 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    super.paint(context, offset);
     if (!showBaseline) {
       return;
     }
-    super.paint(context, offset);
     Offset p1 = Offset(offset.dx, offset.dy + padding);
     Offset p2 = Offset(
       offset.dx + constraints.crossAxisExtent,
