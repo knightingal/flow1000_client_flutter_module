@@ -154,7 +154,7 @@ class CustomScrollViewWrap extends StatelessWidget {
             ),
           ),
         ).frosted(
-          blur: 100.0,
+          blur: 20.0,
           frostColor: Theme.of(context).colorScheme.primary,
         ),
       ),

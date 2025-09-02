@@ -112,6 +112,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       body = Text("AlbumIndexPage");
     } else {
       body = CustomScrollViewWrap(
+        withTitle: false,
         slots: slotGroup,
         builder: (BuildContext context, int index) {
           return GestureDetector(
