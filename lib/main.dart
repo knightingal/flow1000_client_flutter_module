@@ -1,23 +1,36 @@
-import 'package:flow1000_admin/album_index.dart';
-import 'package:flow1000_admin/cover_dialog.dart';
-// ignore: unused_import
-import 'package:flow1000_admin/float_list.dart';
-import 'package:flow1000_admin/scroll.dart';
-import 'package:flow1000_admin/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_module/album_index.dart';
+import 'package:flutter_module/db.dart';
+import 'package:flutter_module/section_content.dart';
+import 'package:go_router/go_router.dart';
+
+final DB db = DB();
 
 void main() {
-  // ignore: dead_code
-  if (true) {
-    runApp(const MyApp());
-    // ignore: dead_code
-  } else {
-    // runApp(FloadApp());
-    // runApp(CustomScrollViewTopPaddingExampleApp());
-    runApp(CustomScrollViewExampleApp());
-  }
+  db.init();
+  runApp(const MyApp());
 }
+
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => MyHomePage(title: 'Flutter Demo Home Page'),
+    ),
+    GoRoute(
+      path: '/section_page/:sectionId',
+      builder: (context, state) {
+        var sectionId = state.pathParameters["sectionId"];
+        return SectionContentPage(albumIndex: int.parse(sectionId!));
+      },
+    ),
+    // GoRoute(
+    //   path: '/about_page',
+    //   builder: (context, state) => const AboutPage(),
+    // ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,45 +38,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flow1000 Admin',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        colorScheme: MaterialTheme.lightScheme(),
-        pageTransitionsTheme: PageTransitionsTheme(
-          builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-            TargetPlatform.values,
-            value: (dynamic _) => const ZoomPageTransitionsBuilder(),
-          ),
-        ),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: MaterialTheme.darkScheme(),
-        pageTransitionsTheme: PageTransitionsTheme(
-          builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-            TargetPlatform.values,
-            value: (dynamic _) => const ZoomPageTransitionsBuilder(),
-          ),
-        ),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return MaterialApp.router(
+      routerConfig: _router,
+
+      title: 'Flutter Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
     );
   }
 }
@@ -123,7 +102,13 @@ class MyHomePage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // platform.invokeMethod("aboutPage");
-            popupCoverDialog(context);
+            // popupCoverDialog(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SectionContentPage(albumIndex: 56),
+              ),
+            );
           },
           tooltip: 'Increment',
           child: const Icon(Icons.add),

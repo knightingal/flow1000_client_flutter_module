@@ -13,89 +13,31 @@ final List<Color> colorPiker = [
   Colors.yellow,
 ];
 
-final double headerHeight = 00.0;
-
-// For testing cache purposes, you can comment out the CustomScrollViewTopPaddingExampleApp
-class CustomScrollViewTopPaddingExampleApp extends StatelessWidget {
-  const CustomScrollViewTopPaddingExampleApp({super.key});
+class CustomScrollViewExampleApp extends StatelessWidget {
+  CustomScrollViewExampleApp({super.key});
 
   final int totalLength = 200;
 
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    SlotGroup slots = SlotGroup.fromCount(4, headerHeight);
-    for (int i = 0; i < totalLength; i++) {
-      slots.insertSlotItem(SlotItem(i, 100 + i % 4 * 20.0));
-    }
-    return MaterialApp(
-      home: Container(
-        padding: EdgeInsets.fromLTRB(0, 150, 0, 0),
-        child: CustomScrollViewWrap(
-          slots: slots,
-          builder: (BuildContext context, int index) {
-            // SlotItem slotItem = slots.slotItemList[index];
-            return Container(
-              height: 100 + index % 4 * 20.0,
-              width: width / 4,
-              color: colorPiker[index % colorPiker.length],
-              child: Center(
-                child: Text(
-                  "Index: $index",
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-            );
-          },
-          totalLength: totalLength,
-        ),
-      ),
-    );
-  }
-}
-
-class CustomScrollViewExampleApp extends StatelessWidget {
-  const CustomScrollViewExampleApp({super.key});
-
-  final int totalLength = 1000;
+  final List<Slot> slot = [
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+    Slot(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    SlotGroup slots = SlotGroup.fromCount(4, headerHeight);
     for (int i = 0; i < totalLength; i++) {
-      slots.insertSlotItem(SlotItem(i, 100 + i % 4 * 20.0));
+      int slotIndex = minSlot(slot);
+      Slot slotOne = slot[slotIndex];
+      slotOne.slotItemList.add(SlotItem(i, 100 + i % 4 * 20.0));
+      slotOne.totalHeight = slotOne.totalHeight + 100 + i % 4 * 20.0;
     }
-    return MaterialApp(
-      home: Stack(
-        children: [
-          CustomScrollViewWrap(
-            withTitle: true,
-            showBaseline: true,
-            slots: slots,
-            builder: (BuildContext context, int index) {
-              // SlotItem slotItem = slots.slotItemList[index];
-              return Container(
-                height: 100 + index % 4 * 20.0,
-                width: width / 4,
-                color: colorPiker[index % colorPiker.length],
-                child: Center(
-                  child: Text(
-                    "Index: $index",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              );
-            },
-            totalLength: totalLength,
-          ),
-          SizedBox(height: headerHeight, width: width).frosted(
-            blur: 10,
-            // frostColor: Theme.of(context).colorScheme.primary,
-          ),
-        ],
-      ),
-    );
+    return MaterialApp();
   }
 }
 
@@ -106,7 +48,6 @@ class CustomScrollViewWrap extends StatelessWidget {
     required this.builder,
     required this.totalLength,
     this.withTitle = false,
-    this.showBaseline = false,
   });
 
   final SlotGroup slots;
@@ -117,11 +58,9 @@ class CustomScrollViewWrap extends StatelessWidget {
 
   final bool withTitle;
 
-  final bool showBaseline;
-
   @override
   Widget build(BuildContext context) {
-    // const Key centerKey = ValueKey<String>('bottom-sliver-list');
+    const Key centerKey = ValueKey<String>('bottom-sliver-list');
 
     var title = SliverAppBar(
       // title: const Text("CustomScrollView"),
@@ -143,20 +82,21 @@ class CustomScrollViewWrap extends StatelessWidget {
             ),
           ),
         ),
-        child: SizedBox.expand(
-          child: Center(
-            child: Text(
-              "CustomScrollView",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface,
-                fontSize: 20.0,
+        child:
+            SizedBox.expand(
+              child: Center(
+                child: Text(
+                  "CustomScrollView",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 20.0,
+                  ),
+                ),
               ),
+            ).frosted(
+              blur: 20.0,
+              frostColor: Theme.of(context).colorScheme.primary,
             ),
-          ),
-        ).frosted(
-          blur: 20.0,
-          frostColor: Theme.of(context).colorScheme.primary,
-        ),
       ),
     );
     var slivers = <Widget>[];
@@ -183,14 +123,7 @@ class CustomScrollViewWrap extends StatelessWidget {
 }
 
 class SliverWaterFall extends SliverMultiBoxAdaptorWidget {
-  const SliverWaterFall(
-    this.slots, {
-    super.key,
-    required super.delegate,
-    this.showBaseline = false,
-  });
-
-  final bool showBaseline;
+  const SliverWaterFall(this.slots, {super.key, required super.delegate});
 
   final SlotGroup slots;
 
@@ -198,11 +131,7 @@ class SliverWaterFall extends SliverMultiBoxAdaptorWidget {
   RenderSliverMultiBoxAdaptor createRenderObject(BuildContext context) {
     final SliverMultiBoxAdaptorElement element =
         context as SliverMultiBoxAdaptorElement;
-    return RenderSliverWaterFall(
-      slots,
-      childManager: element,
-      showBaseline: showBaseline,
-    );
+    return RenderSliverWaterFall(slots, childManager: element);
   }
 }
 
@@ -212,15 +141,9 @@ class _RenderSliverWaterFallParentData extends SliverMultiBoxAdaptorParentData {
 }
 
 class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
-  RenderSliverWaterFall(
-    this.slots, {
-    required super.childManager,
-    this.showBaseline = false,
-  });
+  RenderSliverWaterFall(this.slots, {required super.childManager});
 
   final SlotGroup slots;
-
-  bool showBaseline;
 
   @override
   void setupParentData(covariant RenderObject child) {
@@ -259,7 +182,7 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
     log(
       "scrollOffset:$scrollOffset, constraints.scrollOffset:${constraints.scrollOffset}, constraints.cacheOrigin:${constraints.cacheOrigin}",
     );
-    assert(scrollOffset >= 0.0 + padding);
+    assert(scrollOffset >= 0.0);
     // final double remainingExtent = constraints.remainingCacheExtent;
     final double remainingExtent = constraints.remainingPaintExtent;
     assert(remainingExtent >= 0.0);
@@ -293,8 +216,9 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
         // scroll down
         scrollDown = true;
         int findFirstIndex(int previusFirstIndex) {
-          int startIndex =
-              previusFirstIndex > 0 ? previusFirstIndex - 1 : previusFirstIndex;
+          int startIndex = previusFirstIndex > 0
+              ? previusFirstIndex - 1
+              : previusFirstIndex;
           int totalLength = slots.slotItemList.length;
           for (int i = startIndex; i < totalLength; i++) {
             SlotItem slotItem = slots.slotItemList[i];
@@ -419,14 +343,11 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
 
     double estimatedMaxScrollOffset = slots.totalHeight();
     final double paintExtent = constraints.remainingPaintExtent;
-    final double cacheExtent = constraints.remainingCacheExtent;
     log("estimatedMaxScrollOffset:$estimatedMaxScrollOffset");
-    log("paintExtent:$paintExtent");
-    log("cacheExtent:$cacheExtent");
     geometry = SliverGeometry(
       scrollExtent: estimatedMaxScrollOffset,
       paintExtent: paintExtent,
-      cacheExtent: cacheExtent,
+      cacheExtent: paintExtent,
       maxPaintExtent: estimatedMaxScrollOffset,
     );
 
@@ -437,9 +358,6 @@ class RenderSliverWaterFall extends RenderSliverMultiBoxAdaptor {
   @override
   void paint(PaintingContext context, Offset offset) {
     super.paint(context, offset);
-    if (!showBaseline) {
-      return;
-    }
     Offset p1 = Offset(offset.dx, offset.dy + padding);
     Offset p2 = Offset(
       offset.dx + constraints.crossAxisExtent,

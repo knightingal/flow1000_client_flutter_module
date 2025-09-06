@@ -1,14 +1,14 @@
-import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
-import 'package:flow1000_admin/album_content.dart';
-import 'package:flow1000_admin/scroll.dart';
-import 'package:flow1000_admin/struct/album_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avif/flutter_avif.dart';
-import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
-import 'config.dart';
+import 'main.dart';
+import 'scroll.dart';
+import 'section_content.dart';
+import 'struct/album_info.dart';
 import 'struct/slot.dart';
 
 class AlbumIndexPage extends StatefulWidget {
@@ -25,17 +25,18 @@ class AlbumIndexPage extends StatefulWidget {
 class AlbumIndexState extends State<AlbumIndexPage> {
   late double width;
   Future<List<AlbumInfo>> fetchAlbumIndex() async {
-    final response = await http.get(
-      Uri.parse(albumIndexUrl(album: widget.album)),
+    List<Map<String, Object?>> imgRow = await db.querySectionInfoByAlbum(
+      widget.album,
     );
-    if (response.statusCode == 200) {
-      List<dynamic> jsonArray = jsonDecode(response.body);
-      List<AlbumInfo> albumInfoList =
-          jsonArray.map((e) => AlbumInfo.fromJson(e)).toList();
-      return albumInfoList;
-    } else {
-      throw Exception("Failed to load album");
-    }
+
+    Directory? directory = await getExternalStorageDirectory();
+
+    String rootPath = "${directory!.path}${Platform.pathSeparator}Download";
+
+    List<AlbumInfo> albumInfoList = imgRow
+        .map((e) => AlbumInfo.fromJson(e, rootPath))
+        .toList();
+    return albumInfoList;
   }
 
   List<AlbumInfo> albumInfoList = [];
@@ -50,7 +51,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
     super.initState();
     fetchAlbumIndex().then((albumInfoList) {
       var length = (width > 1500) ? 8 : 2;
-      slotGroup = SlotGroup.fromCount(length, 0);
+      slotGroup = SlotGroup.fromCount(length);
       // slot = List.generate(length, (index) => Slot(), growable: false);
       for (int i = 0; i < albumInfoList.length; i++) {
         AlbumInfo albumInfo = albumInfoList[i];
@@ -88,18 +89,18 @@ class AlbumIndexState extends State<AlbumIndexPage> {
   Widget _generateImageContainer(int index) {
     var url = albumInfoList[index].toCoverUrl();
     if (url.endsWith(".avif")) {
-      return AvifImage.network(
+      return AvifImage.file(
         width: albumInfoList[index].realWidth,
         height: albumInfoList[index].realHeight,
         key: Key("image-$index"),
-        url,
+        File(url),
       );
     } else {
-      return Image.network(
+      return Image.file(
         width: albumInfoList[index].realWidth,
         height: albumInfoList[index].realHeight,
         key: Key("image-$index"),
-        albumInfoList[index].toCoverUrl(),
+        File(albumInfoList[index].toCoverUrl()),
       );
     }
   }
@@ -112,7 +113,6 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       body = Text("AlbumIndexPage");
     } else {
       body = CustomScrollViewWrap(
-        withTitle: false,
         slots: slotGroup,
         builder: (BuildContext context, int index) {
           return GestureDetector(
@@ -120,10 +120,9 @@ class AlbumIndexState extends State<AlbumIndexPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder:
-                      (context) => AlbumContentPage(
-                        albumIndex: albumInfoList[index].index,
-                      ),
+                  builder: (context) => SectionContentPage(
+                    albumIndex: albumInfoList[index].index,
+                  ),
                 ),
               );
             },
@@ -157,14 +156,12 @@ class AlbumIndexState extends State<AlbumIndexPage> {
                               child: Text(
                                 albumInfoList[index].title,
                                 style: TextStyle(
-                                  fontSize:
-                                      Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge!.fontSize,
-                                  color:
-                                      Theme.of(
-                                        context,
-                                      ).colorScheme.onPrimaryContainer,
+                                  fontSize: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge!.fontSize,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimaryContainer,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
