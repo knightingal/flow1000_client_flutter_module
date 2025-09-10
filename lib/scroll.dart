@@ -60,8 +60,6 @@ class CustomScrollViewWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Key centerKey = ValueKey<String>('bottom-sliver-list');
-
     var title = SliverAppBar(
       // title: const Text("CustomScrollView"),
       expandedHeight: kToolbarHeight,
