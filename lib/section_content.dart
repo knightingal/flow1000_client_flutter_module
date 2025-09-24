@@ -90,6 +90,7 @@ class SectionContentPageState extends State<SectionContentPage> {
       //   title: Text(albumInfoList!.title),
       // );
       body = CustomScrollViewWrap(
+        title: albumInfoList!.title,
         withTitle: true,
         slots: slotGroup,
         builder: (BuildContext context, int index) {
