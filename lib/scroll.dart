@@ -48,7 +48,10 @@ class CustomScrollViewWrap extends StatelessWidget {
     required this.builder,
     required this.totalLength,
     this.withTitle = false,
+    this.title,
   });
+
+  final String? title;
 
   final SlotGroup slots;
 
@@ -88,7 +91,7 @@ class CustomScrollViewWrap extends StatelessWidget {
                   height: kToolbarHeight,
                   child: Center(
                     child: Text(
-                      "CustomScrollView",
+                      this.title ?? "",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 20.0,
