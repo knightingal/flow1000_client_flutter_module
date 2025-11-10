@@ -131,47 +131,7 @@ class AlbumIndexState extends State<AlbumIndexPage> {
               width: albumInfoList[index].frameWidth,
               child: Align(
                 alignment: Alignment.center,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Container(
-                    width: albumInfoList[index].cardWidth,
-                    height: albumInfoList[index].cardHeight,
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12.0),
-                            child: _generateImageContainer(index),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: titleHeight.toDouble(),
-                            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                albumInfoList[index].title,
-                                style: TextStyle(
-                                  fontSize: Theme.of(
-                                    context,
-                                  ).textTheme.bodyLarge!.fontSize,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onPrimaryContainer,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                child: buildCard(index),
               ),
             ),
           );
@@ -180,6 +140,36 @@ class AlbumIndexState extends State<AlbumIndexPage> {
       );
     }
     return body;
+  }
+
+  Widget buildCard(int index) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: _generateImageContainer(index),
+          ),
+          Container(
+            height: titleHeight.toDouble(),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                albumInfoList[index].title,
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
