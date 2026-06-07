@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_module/album_index.dart';
 import 'package:flutter_module/db.dart';
+import 'package:flutter_module/diffusion_page.dart';
 import 'package:flutter_module/section_content.dart';
 import 'package:go_router/go_router.dart';
 
@@ -83,6 +84,7 @@ class MyHomePage extends StatelessWidget {
               Tab(text: "1806"),
               Tab(text: "1807"),
               Tab(text: "1808"),
+              Tab(text: "diffusion"),
             ],
           ),
         ),
@@ -96,6 +98,7 @@ class MyHomePage extends StatelessWidget {
             AlbumIndexPage(album: "1806"),
             AlbumIndexPage(album: "1807"),
             AlbumIndexPage(album: "1808"),
+            DiffusionPage(),
           ],
         ),
         // body: AlbumGridPage(),
