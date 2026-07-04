@@ -74,40 +74,41 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
   @override
   void initState() {
     super.initState();
-    fetchAlbumIndex().then((albumInfoList) {
-      var length = (width > 1500) ? 8 : 2;
-      slotGroup = SlotGroup.fromCount(length);
-      // slot = List.generate(length, (index) => Slot(), growable: false);
-      for (int i = 0; i < albumInfoList.length; i++) {
-        AlbumInfo albumInfo = albumInfoList[i];
-        int originImgWidth = albumInfo.coverWidth;
-        int originImgHeight = albumInfo.coverHeight;
+    albumInfoListFuture = fetchAlbumIndex();
+    // fetchAlbumIndex().then((albumInfoList) {
+    //   var length = (width > 1500) ? 8 : 2;
+    //   slotGroup = SlotGroup.fromCount(length);
+    //   // slot = List.generate(length, (index) => Slot(), growable: false);
+    //   for (int i = 0; i < albumInfoList.length; i++) {
+    //     AlbumInfo albumInfo = albumInfoList[i];
+    //     int originImgWidth = albumInfo.coverWidth;
+    //     int originImgHeight = albumInfo.coverHeight;
 
-        double frameWidth = width / length;
+    //     double frameWidth = width / length;
 
-        double coverImgWidth = frameWidth - coverPadding;
-        double coverImgHeight =
-            coverImgWidth / originImgWidth * originImgHeight;
+    //     double coverImgWidth = frameWidth - coverPadding;
+    //     double coverImgHeight =
+    //         coverImgWidth / originImgWidth * originImgHeight;
 
-        double cardHeight = coverImgHeight + titleHeight;
-        double cardWidth = coverImgWidth;
+    //     double cardHeight = coverImgHeight + titleHeight;
+    //     double cardWidth = coverImgWidth;
 
-        double frameHeight = cardHeight + coverPadding;
+    //     double frameHeight = cardHeight + coverPadding;
 
-        albumInfo.frameWidth = frameWidth;
-        albumInfo.frameHeight = frameHeight;
+    //     albumInfo.frameWidth = frameWidth;
+    //     albumInfo.frameHeight = frameHeight;
 
-        albumInfo.cardHeight = cardHeight;
-        albumInfo.cardWidth = cardWidth;
+    //     albumInfo.cardHeight = cardHeight;
+    //     albumInfo.cardWidth = cardWidth;
 
-        albumInfo.realHeight = coverImgHeight;
-        albumInfo.realWidth = coverImgWidth;
+    //     albumInfo.realHeight = coverImgHeight;
+    //     albumInfo.realWidth = coverImgWidth;
 
-        slotGroup.insertSlotItem(SlotItem(i, albumInfo.frameHeight));
-      }
-      // setState(() {
-      //   this.albumInfoList = albumInfoList;
-      // });
-    });
+    //     slotGroup.insertSlotItem(SlotItem(i, albumInfo.frameHeight));
+    //   }
+    //   // setState(() {
+    //   //   this.albumInfoList = albumInfoList;
+    //   // });
+    // });
   }
 }
