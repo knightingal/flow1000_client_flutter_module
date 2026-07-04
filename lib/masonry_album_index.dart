@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/struct/album_info.dart';
 import 'package:flutter_module/struct/slot.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MasonryAlbumIndex extends StatefulWidget {
