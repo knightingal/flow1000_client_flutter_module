@@ -35,11 +35,36 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
     return albumInfoList;
   }
 
-  List<AlbumInfo> albumInfoList = [];
+  late Future<List<AlbumInfo>> albumInfoListFuture;
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    width = MediaQuery.of(context).size.width;
+    Widget body = FutureBuilder<List<AlbumInfo>>(
+      future: albumInfoListFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          List<AlbumInfo> dataList = snapshot.data!;
+          return LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              var crossAxisCount = 2;
+              return MasonryGridView.count(
+                crossAxisCount: crossAxisCount,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                itemCount: dataList.length,
+                itemBuilder: (context, index) {
+                  return SizedBox.shrink();
+                },
+              );
+            },
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+    return body;
   }
 
   final int coverPadding = 8;
@@ -80,9 +105,9 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
 
         slotGroup.insertSlotItem(SlotItem(i, albumInfo.frameHeight));
       }
-      setState(() {
-        this.albumInfoList = albumInfoList;
-      });
+      // setState(() {
+      //   this.albumInfoList = albumInfoList;
+      // });
     });
   }
 }
