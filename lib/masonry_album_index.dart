@@ -112,4 +112,53 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
     //   // });
     // });
   }
+
+  Widget _generateImageContainer(AlbumInfo albumInfo) {
+    var url = albumInfo.toCoverUrl();
+    if (url.endsWith(".avif")) {
+      return AvifImage.file(
+        width: albumInfo.realWidth,
+        height: albumInfo.realHeight,
+        key: Key("image-${albumInfo.index}"),
+        File(url),
+      );
+    } else {
+      return Image.file(
+        width: albumInfo.realWidth,
+        height: albumInfo.realHeight,
+        key: Key("image-${albumInfo.index}"),
+        File(albumInfo.toCoverUrl()),
+      );
+    }
+  }
+
+  Widget buildCard(AlbumInfo albumInfo) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: _generateImageContainer(albumInfo),
+          ),
+          Container(
+            height: titleHeight.toDouble(),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                albumInfo.title,
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
