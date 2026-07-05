@@ -55,7 +55,7 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
                 crossAxisSpacing: 0,
                 itemCount: dataList.length,
                 itemBuilder: (context, index) {
-                  return SizedBox.shrink();
+                  return buildCard(snapshot.data![index]);
                 },
               );
             },
