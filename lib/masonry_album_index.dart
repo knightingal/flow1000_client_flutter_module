@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_avif/flutter_avif.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/struct/album_info.dart';
 import 'package:flutter_module/struct/slot.dart';
