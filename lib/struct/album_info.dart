@@ -99,20 +99,37 @@ class AlbumInfo {
     required this.rootPath,
   });
 
-  factory AlbumInfo.fromJson(Map<String, dynamic> json, String rootPath) {
-    final String dirName = json["name"];
+  factory AlbumInfo.fromMap(Map<String, dynamic> map, String rootPath) {
+    final String dirName = map["name"];
 
     return AlbumInfo(
-      index: json["id"],
+      index: map["id"],
       dirName: dirName,
-      cover: json["cover"],
-      coverWidth: json["coverWidth"],
-      coverHeight: json["coverHeight"],
-      album: json["album"],
-      clientStatus: json["clientStatus"],
-      title: json["name"],
-      timeStampe: json["mtime"],
+      cover: map["cover"],
+      coverWidth: map["coverWidth"],
+      coverHeight: map["coverHeight"],
+      album: map["album"],
+      clientStatus: map["clientStatus"],
+      title: map["name"],
+      timeStampe: map["mtime"],
       rootPath: rootPath,
+    );
+  }
+
+  factory AlbumInfo.fromJson(Map<String, dynamic> map) {
+    final String dirName = map["name"];
+
+    return AlbumInfo(
+      index: map["id"],
+      dirName: dirName,
+      cover: map["cover"],
+      coverWidth: map["coverWidth"],
+      coverHeight: map["coverHeight"],
+      album: map["album"],
+      clientStatus: map["clientStatus"],
+      title: map["name"],
+      timeStampe: map["mtime"],
+      rootPath: "",
     );
   }
 }

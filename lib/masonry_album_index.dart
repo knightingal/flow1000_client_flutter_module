@@ -31,7 +31,7 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
     String rootPath = "${directory!.path}${Platform.pathSeparator}Download";
 
     List<AlbumInfo> albumInfoList = imgRow
-        .map((e) => AlbumInfo.fromJson(e, rootPath))
+        .map((e) => AlbumInfo.fromMap(e, rootPath))
         .toList();
     return albumInfoList;
   }
