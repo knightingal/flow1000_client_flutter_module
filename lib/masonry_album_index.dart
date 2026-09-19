@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_avif/flutter_avif.dart';
+import 'package:flutter_module/config.dart';
 import 'package:flutter_module/main.dart';
 import 'package:flutter_module/struct/album_info.dart';
 import 'package:flutter_module/struct/slot.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class MasonryAlbumIndex extends StatefulWidget {
@@ -21,7 +24,7 @@ class MasonryAlbumIndex extends StatefulWidget {
 
 class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
   late double width;
-  Future<List<AlbumInfo>> fetchAlbumIndex() async {
+  Future<List<AlbumInfo>> loadAlbumIndexFromLocal() async {
     List<Map<String, Object?>> imgRow = await db.querySectionInfoByAlbum(
       widget.album,
     );
@@ -34,6 +37,22 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
         .map((e) => AlbumInfo.fromMap(e, rootPath))
         .toList();
     return albumInfoList;
+  }
+
+  Future<List<AlbumInfo>> fetchAlbumIndexFromRemote() async {
+    final response = await http.get(
+      Uri.parse(albumIndexUrl(album: widget.album)),
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> jsonArray = jsonDecode(response.body);
+
+      List<AlbumInfo> albumInfoList = jsonArray
+          .map((e) => AlbumInfo.fromJson(e))
+          .toList();
+      return albumInfoList;
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 
   late Future<List<AlbumInfo>> albumInfoListFuture;
@@ -75,7 +94,7 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
   @override
   void initState() {
     super.initState();
-    albumInfoListFuture = fetchAlbumIndex();
+    albumInfoListFuture = loadAlbumIndexFromLocal();
   }
 
   Widget _generateImageContainer(AlbumInfo albumInfo) {
