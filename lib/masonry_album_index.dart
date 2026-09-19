@@ -133,17 +133,30 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
   }
 
   Widget buildCard(AlbumInfo albumInfo) {
+    int originImgHeight = albumInfo.coverHeight;
+    int originImgWidth = albumInfo.coverWidth;
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      color: Theme.of(context).colorScheme.primaryContainer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.inversePrimary,
+          width: 2,
+        ),
+      ),
+      color: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-            child: _generateImageContainer(albumInfo),
+          AspectRatio(
+            aspectRatio: originImgWidth / originImgHeight,
+            child: ClipRRect(
+              borderRadius: BorderRadiusGeometry.only(
+                topLeft: Radius.circular(12.0),
+                topRight: Radius.circular(12.0),
+              ),
+              child: _generateImageContainer(albumInfo),
+            ),
           ),
           Container(
-            height: titleHeight.toDouble(),
             padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: Align(
               alignment: Alignment.centerLeft,
@@ -153,7 +166,6 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
                   fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
