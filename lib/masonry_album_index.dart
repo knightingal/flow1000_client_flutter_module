@@ -12,9 +12,15 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class MasonryAlbumIndex extends StatefulWidget {
-  const MasonryAlbumIndex({super.key, required this.album});
+  const MasonryAlbumIndex({
+    super.key,
+    required this.album,
+    this.remote = false,
+  });
 
   final String album;
+
+  final bool remote;
 
   @override
   State<StatefulWidget> createState() {
@@ -94,7 +100,9 @@ class MasonryAlbumIndexState extends State<MasonryAlbumIndex> {
   @override
   void initState() {
     super.initState();
-    albumInfoListFuture = loadAlbumIndexFromLocal();
+    albumInfoListFuture = widget.remote
+        ? fetchAlbumIndexFromRemote()
+        : loadAlbumIndexFromLocal();
   }
 
   Widget _generateImageContainer(AlbumInfo albumInfo) {
