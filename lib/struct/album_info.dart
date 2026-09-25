@@ -83,7 +83,11 @@ class AlbumInfo {
   final String rootPath;
 
   String toCoverUrl() {
-    return "$rootPath/$dirName/$cover";
+    if (rootPath != "") {
+      return "$rootPath/$dirName/$cover";
+    } else {
+      return "http://192.168.2.12:3002/linux1000/source/$dirName/$cover";
+    }
   }
 
   AlbumInfo({
